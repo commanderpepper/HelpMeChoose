@@ -2,6 +2,7 @@ package commanderpepper.helpmechoose.lists
 
 import android.util.Log
 import commanderpepper.helpmechoose.data.model.HMCList
+import commanderpepper.helpmechoose.util.launchCoroutine
 
 class ListsPresenter (val listView : ListsContract.View) : ListsContract.Presenter {
 
@@ -9,7 +10,7 @@ class ListsPresenter (val listView : ListsContract.View) : ListsContract.Present
         listView.presenter = this
     }
 
-    override fun loadLists() {
+    override fun loadLists() = launchCoroutine {
         Log.i("Lists Presenter", "Inside load lists")
     }
 
