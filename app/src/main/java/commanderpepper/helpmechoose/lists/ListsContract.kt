@@ -8,7 +8,7 @@ interface ListsContract {
 
     interface View : BaseView<Presenter> {
 
-        fun showLists()
+        fun showLists(lists : List<HMCList>)
 
         fun showAddList()
 

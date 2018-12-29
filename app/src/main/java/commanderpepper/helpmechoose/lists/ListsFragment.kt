@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import commanderpepper.helpmechoose.R
 import commanderpepper.helpmechoose.addeditlist.AddEditListActivity
+import commanderpepper.helpmechoose.data.model.HMCList
 
 class ListsFragment : Fragment(), ListsContract.View {
 
@@ -37,7 +38,7 @@ class ListsFragment : Fragment(), ListsContract.View {
         return root
     }
 
-    override fun showLists() {
+    override fun showLists(lists : List<HMCList>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
