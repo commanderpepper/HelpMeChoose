@@ -18,6 +18,13 @@ interface HMCListDAO{
     @Query("SELECT * FROM HMCListNames") fun getHMCLists(): List<HMCLists>
 
     /**
+     * Retrieve a single HMC Lists object using the id
+     *
+     * @return return a single HMC Lists object
+     */
+    @Query("SELECT * FROM HMCListNames WHERE hmclistid = :id") fun getHMCListById(id : String): HMCLists?
+
+    /**
      * Insert a HMC List into HMC List Names
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertList(hmcList : HMCLists)
@@ -27,5 +34,5 @@ interface HMCListDAO{
      *
      * @return the number of tasks deleted. This should always be 1.
      */
-    @Query("DELETE FROM HMCListNames WHERE id = :id") fun deleteHMCListById(id : String): Int
+    @Query("DELETE FROM HMCListNames WHERE hmclistid = :id") fun deleteHMCListById(id : String): Int
 }
