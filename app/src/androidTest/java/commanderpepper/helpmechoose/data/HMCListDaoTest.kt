@@ -8,6 +8,7 @@ import commanderpepper.helpmechoose.data.model.HMCLists
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -31,6 +32,9 @@ class HMCListDaoTest {
     }
 
 
+    /**
+     * Insert a HMC list and get it using by it's id
+     */
     @Test
     fun insertHMCListAndGetById() {
         // Insert a HMC List
@@ -41,6 +45,32 @@ class HMCListDaoTest {
 
         assertHMCList(loaded, DEFAULT_ID, DEFAULT_NAME, DEFAULT_DESCRIPTION)
     }
+
+    @Test
+    fun insertHMCListAndGetManyHMCLists() {
+        //Insert a HMC lists
+        database.hmcDao().insertList(DEFAULT_HMCLIST)
+
+        //Retrieve the first element of the list retrieved
+        val loaded = database.hmcDao().getHMCLists()[0]
+
+        assertHMCList(loaded, DEFAULT_ID, DEFAULT_NAME, DEFAULT_DESCRIPTION)
+    }
+
+    @Test
+    fun insertHMCListAndDelete() {
+        // Insert a HMC List
+        database.hmcDao().insertList(DEFAULT_HMCLIST)
+
+        // Delete HMC List
+        database.hmcDao().deleteHMCListById(DEFAULT_ID)
+
+        // Retrieve a HMC list by ID from the database
+        val loaded = database.hmcDao().getHMCListById(DEFAULT_HMCLIST.id)
+
+        assertThat(loaded, Matchers.`is`(Matchers.nullValue()))
+    }
+
 
     private fun assertHMCList(
             hmclist: HMCLists?,

@@ -2,13 +2,13 @@ package commanderpepper.helpmechoose.lists
 
 import commanderpepper.helpmechoose.BasePresenter
 import commanderpepper.helpmechoose.BaseView
-import commanderpepper.helpmechoose.data.model.HMCList
+import commanderpepper.helpmechoose.data.model.HMCLists
 
 interface ListsContract {
 
     interface View : BaseView<Presenter> {
 
-        fun showLists(lists : List<HMCList>)
+        fun showLists(lists : List<HMCLists>)
 
         fun showAddList()
 
@@ -24,7 +24,7 @@ interface ListsContract {
 
         fun addList()
 
-        fun openListDetails(requestedList : HMCList)
+        fun openListDetails(requestedList : HMCLists)
 
     }
 

@@ -1,7 +1,9 @@
 package commanderpepper.helpmechoose.lists
 
 import android.util.Log
+import commanderpepper.helpmechoose.data.HMCListRepository
 import commanderpepper.helpmechoose.data.model.HMCList
+import commanderpepper.helpmechoose.data.model.HMCLists
 import commanderpepper.helpmechoose.util.launchCoroutine
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -10,7 +12,8 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
-class ListsPresenter(val listView: ListsContract.View) : ListsContract.Presenter {
+class ListsPresenter(val listView: ListsContract.View,
+                     val hmcListRepository: HMCListRepository) : ListsContract.Presenter {
 
     init {
         listView.presenter = this
@@ -23,9 +26,9 @@ class ListsPresenter(val listView: ListsContract.View) : ListsContract.Presenter
 
     override fun loadLists() {
         GlobalScope.launch(Dispatchers.IO) {
-            val lists = listOf<HMCList>()
+            val lists = async { hmcListRepository.getLists() }
             withContext(Dispatchers.Main) {
-                listView.showLists(lists)
+                listView.showLists(lists.await())
             }
         }
     }
@@ -39,7 +42,7 @@ class ListsPresenter(val listView: ListsContract.View) : ListsContract.Presenter
         loadLists()
     }
 
-    override fun openListDetails(requestedList: HMCList) {
+    override fun openListDetails(requestedList: HMCLists) {
         Log.i("Lists Presenter", "Inside load lists")
     }
 

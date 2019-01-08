@@ -19,4 +19,6 @@ interface HMCListDataSource {
     suspend fun saveHMCList(hmcList: HMCLists)
 
     suspend fun deleteHMCList(id: String)
+
+    suspend fun getHMCList(id: String): HMCLists
 }

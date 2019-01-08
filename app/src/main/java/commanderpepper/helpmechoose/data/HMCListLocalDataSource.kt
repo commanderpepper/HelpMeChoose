@@ -2,14 +2,12 @@ package commanderpepper.helpmechoose.data
 
 import android.support.annotation.VisibleForTesting
 import commanderpepper.helpmechoose.data.Room.HMCListDAO
-import commanderpepper.helpmechoose.data.model.HMCList
 import commanderpepper.helpmechoose.data.model.HMCLists
 
 class HMCListLocalDataSource private constructor(val hmclistdao: HMCListDAO) : HMCListDataSource {
 
     override suspend fun getHMCLists(): List<HMCLists> {
-        val hmclists = hmclistdao.getHMCLists()
-        return hmclists
+        return hmclistdao.getHMCLists()
     }
 
     override suspend fun saveHMCList(hmcList: HMCLists) {
@@ -18,6 +16,10 @@ class HMCListLocalDataSource private constructor(val hmclistdao: HMCListDAO) : H
 
     override suspend fun deleteHMCList(id: String) {
         hmclistdao.deleteHMCListById(id)
+    }
+
+    override suspend fun getHMCList(id: String): HMCLists {
+        return hmclistdao.getHMCListById(id)!!
     }
 
     companion object {
