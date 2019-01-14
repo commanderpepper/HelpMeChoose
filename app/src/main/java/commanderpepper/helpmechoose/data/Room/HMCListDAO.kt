@@ -5,6 +5,7 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import commanderpepper.helpmechoose.data.model.HMCLists
+import commanderpepper.helpmechoose.data.model.HMCListsValues
 
 @Dao
 interface HMCListDAO{
@@ -35,4 +36,9 @@ interface HMCListDAO{
      * @return the number of tasks deleted. This should always be 1.
      */
     @Query("DELETE FROM HMCListNames WHERE hmclistid = :id") fun deleteHMCListById(id : String): Int
+
+    /**
+     * Insert a HMC List Value row into HMCListsValues
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertValue(hmclistsvalues: HMCListsValues)
 }

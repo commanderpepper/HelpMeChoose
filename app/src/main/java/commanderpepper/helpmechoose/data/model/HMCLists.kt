@@ -2,6 +2,7 @@ package commanderpepper.helpmechoose.data.model
 
 import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 
 /**
@@ -14,5 +15,17 @@ import android.arch.persistence.room.PrimaryKey
 @Entity(tableName = "HMCListNames")
 data class HMCLists(
         @PrimaryKey @ColumnInfo(name = "hmclistid") var id: String = "",
-        @ColumnInfo(name = "name") var name: String = "",
-        @ColumnInfo(name = "description") var description: String = "")
+        @ColumnInfo(name = "name") var name: String = "") {
+
+    companion object {
+        val matrix: MutableMap<Pair<String, String>, String?> = mutableMapOf<Pair<String, String>, String?>()
+    }
+
+    fun defineMatrix(list: MutableSet<String>): MutableMap<Pair<String, String>, String?> {
+        return mutableMapOf<Pair<String, String>, String?>().apply {
+            list.forEach { outer -> list.forEach { inner -> this[(outer to inner)] = if (outer == inner) "=" else null } }
+        }
+    }
+}
+
+

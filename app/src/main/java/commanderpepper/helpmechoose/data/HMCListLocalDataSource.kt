@@ -3,6 +3,7 @@ package commanderpepper.helpmechoose.data
 import android.support.annotation.VisibleForTesting
 import commanderpepper.helpmechoose.data.Room.HMCListDAO
 import commanderpepper.helpmechoose.data.model.HMCLists
+import commanderpepper.helpmechoose.data.model.HMCListsValues
 
 class HMCListLocalDataSource private constructor(val hmclistdao: HMCListDAO) : HMCListDataSource {
 
@@ -20,6 +21,10 @@ class HMCListLocalDataSource private constructor(val hmclistdao: HMCListDAO) : H
 
     override suspend fun getHMCList(id: String): HMCLists {
         return hmclistdao.getHMCListById(id)!!
+    }
+
+    override suspend fun insertValue(hmclistsvalues: HMCListsValues) {
+        return hmclistdao.insertValue(hmclistsvalues)
     }
 
     companion object {

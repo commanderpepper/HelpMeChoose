@@ -43,7 +43,7 @@ class HMCListDaoTest {
         // Retrieve a HMC list by ID from the database
         val loaded = database.hmcDao().getHMCListById(DEFAULT_HMCLIST.id)
 
-        assertHMCList(loaded, DEFAULT_ID, DEFAULT_NAME, DEFAULT_DESCRIPTION)
+        assertHMCList(loaded, DEFAULT_ID, DEFAULT_NAME)
     }
 
     @Test
@@ -54,7 +54,7 @@ class HMCListDaoTest {
         //Retrieve the first element of the list retrieved
         val loaded = database.hmcDao().getHMCLists()[0]
 
-        assertHMCList(loaded, DEFAULT_ID, DEFAULT_NAME, DEFAULT_DESCRIPTION)
+        assertHMCList(loaded, DEFAULT_ID, DEFAULT_NAME)
     }
 
     @Test
@@ -75,13 +75,11 @@ class HMCListDaoTest {
     private fun assertHMCList(
             hmclist: HMCLists?,
             id: String,
-            name: String,
-            description: String
+            name: String
     ) {
         assertThat<HMCLists>(hmclist as HMCLists, notNullValue())
         assertThat(hmclist.id, `is`(id))
         assertThat(hmclist.name, `is`(name))
-        assertThat(hmclist.description, `is`(description))
     }
 
     companion object {
@@ -89,6 +87,8 @@ class HMCListDaoTest {
         private val DEFAULT_DESCRIPTION = "description"
         private val DEFAULT_ID = "id"
 
-        private val DEFAULT_HMCLIST = HMCLists(DEFAULT_ID, DEFAULT_NAME, DEFAULT_DESCRIPTION)
+        private val DEFAULT_LIST = mutableSetOf("A","B")
+
+        private val DEFAULT_HMCLIST = HMCLists(DEFAULT_ID, DEFAULT_NAME)
     }
 }

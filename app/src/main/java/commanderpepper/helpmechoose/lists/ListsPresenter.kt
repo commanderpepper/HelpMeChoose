@@ -19,11 +19,6 @@ class ListsPresenter(val listView: ListsContract.View,
         listView.presenter = this
     }
 
-//    override fun loadLists() = launchCoroutine(Dispatchers.IO){
-//        Log.i("Lists Presenter", "Inside load lists")
-//        Log.i("Lists Presenter", this.coroutineContext.toString())
-//    }
-
     override fun loadLists() {
         GlobalScope.launch(Dispatchers.IO) {
             val lists = async { hmcListRepository.getLists() }

@@ -1,6 +1,7 @@
 package commanderpepper.helpmechoose.data
 
 import commanderpepper.helpmechoose.data.model.HMCLists
+import commanderpepper.helpmechoose.data.model.HMCListsValues
 
 /**
  * Main entry point for accessing tasks data.
@@ -21,4 +22,6 @@ interface HMCListDataSource {
     suspend fun deleteHMCList(id: String)
 
     suspend fun getHMCList(id: String): HMCLists
+
+    suspend fun insertValue(hmclistsvalues: HMCListsValues)
 }
