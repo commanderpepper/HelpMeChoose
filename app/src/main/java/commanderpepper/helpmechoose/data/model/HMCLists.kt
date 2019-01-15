@@ -17,13 +17,27 @@ data class HMCLists(
         @PrimaryKey @ColumnInfo(name = "hmclistid") var id: String = "",
         @ColumnInfo(name = "name") var name: String = "") {
 
-    companion object {
-        val matrix: MutableMap<Pair<String, String>, String?> = mutableMapOf<Pair<String, String>, String?>()
-    }
+    @Ignore
+    var matrix: MutableMap<Pair<String, String>, String?> = mutableMapOf<Pair<String, String>, String?>()
+
+    @Ignore
+    var uniquePairs : MutableMap<List<String>, String?> = mutableMapOf()
 
     fun defineMatrix(list: MutableSet<String>): MutableMap<Pair<String, String>, String?> {
         return mutableMapOf<Pair<String, String>, String?>().apply {
             list.forEach { outer -> list.forEach { inner -> this[(outer to inner)] = if (outer == inner) "=" else null } }
+        }
+    }
+
+    fun defineSet(set: MutableSet<String>): MutableMap<List<String>, String?> {
+        return mutableMapOf<List<String>, String?>().apply {
+            set.forEach { outer ->
+                set.forEach { inner ->
+                    if (outer != inner) {
+                        this[listOf(outer, inner).sorted()] = ""
+                    }
+                }
+            }
         }
     }
 }

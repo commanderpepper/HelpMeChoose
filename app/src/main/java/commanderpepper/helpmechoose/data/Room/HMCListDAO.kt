@@ -41,4 +41,9 @@ interface HMCListDAO{
      * Insert a HMC List Value row into HMCListsValues
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE) fun insertValue(hmclistsvalues: HMCListsValues)
+
+    /**
+     * Retrieve all HMC Lists Value pairs that match the id given
+     */
+    @Query("SELECT * FROM HMCListsValues WHERE listid = :id") fun getHMCListsValues(id : String): List<HMCListsValues>
 }

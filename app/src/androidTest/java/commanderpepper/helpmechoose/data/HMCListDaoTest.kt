@@ -5,6 +5,7 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.data.model.HMCLists
+import commanderpepper.helpmechoose.data.model.HMCListsValues
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -58,6 +59,27 @@ class HMCListDaoTest {
     }
 
     @Test
+    fun insertHMCListAndHMCListValues() {
+        //Insert a HMC lists
+        database.hmcDao().insertList(DEFAULT_HMCLIST)
+
+//        for (i in DEFAULT_HMCLIST.matrix.keys) {
+//            val lv = HMCListsValues(DEFAULT_ID, i.first, i.second, DEFAULT_HMCLIST.matrix[i] ?: "")
+//            database.hmcDao().insertValue(lv)
+//        }
+
+        for (i in DEFAULT_HMCLIST.uniquePairs.keys) {
+            val vl = HMCListsValues(DEFAULT_ID, i.first(), i.last(), DEFAULT_HMCLIST.uniquePairs[i]
+                    ?: "")
+            database.hmcDao().insertValue(vl)
+        }
+
+        val listw = database.hmcDao().getHMCListsValues(DEFAULT_ID)
+
+        assertThat(listw.size, `is`(3))
+    }
+
+    @Test
     fun insertHMCListAndDelete() {
         // Insert a HMC List
         database.hmcDao().insertList(DEFAULT_HMCLIST)
@@ -84,11 +106,14 @@ class HMCListDaoTest {
 
     companion object {
         private val DEFAULT_NAME = "name"
-        private val DEFAULT_DESCRIPTION = "description"
         private val DEFAULT_ID = "id"
 
-        private val DEFAULT_LIST = mutableSetOf("A","B")
+        private val DEFAULT_LIST = mutableSetOf("A", "B", "C")
 
-        private val DEFAULT_HMCLIST = HMCLists(DEFAULT_ID, DEFAULT_NAME)
+        private val DEFAULT_HMCLIST = HMCLists(DEFAULT_ID, DEFAULT_NAME).apply {
+            matrix = this.defineMatrix(DEFAULT_LIST)
+            uniquePairs = this.defineSet(DEFAULT_LIST)
+        }
+
     }
 }

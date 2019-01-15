@@ -27,6 +27,10 @@ class HMCListLocalDataSource private constructor(val hmclistdao: HMCListDAO) : H
         return hmclistdao.insertValue(hmclistsvalues)
     }
 
+    override suspend fun getHMCListsValues(id: String): List<HMCListsValues> {
+        return hmclistdao.getHMCListsValues(id)
+    }
+
     companion object {
         private var INSTANCE: HMCListLocalDataSource? = null
 
