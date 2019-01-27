@@ -1,44 +1,51 @@
 package commanderpepper.helpmechoose.lists
 
 import android.util.Log
-import commanderpepper.helpmechoose.data.HMCListRepository
-import commanderpepper.helpmechoose.data.model.HMCList
+import commanderpepper.helpmechoose.data.HMCListLocalDataSource
 import commanderpepper.helpmechoose.data.model.HMCLists
-import commanderpepper.helpmechoose.util.launchCoroutine
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.*
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kotlin.coroutines.CoroutineContext
 
 class ListsPresenter(val listView: ListsContract.View,
-                     val hmcListRepository: HMCListRepository) : ListsContract.Presenter {
+                     val hmcListLocalDataSource: HMCListLocalDataSource) : ListsContract.Presenter {
 
+    // Sets this presenter as the instance of the presenter in the view
     init {
         listView.presenter = this
     }
 
+    /**
+     * Retrieves the a list of hmc list from the database and passes that info to the view
+     */
     override fun loadLists() {
         GlobalScope.launch(Dispatchers.IO) {
-            val lists = async { hmcListRepository.getLists() }
+            val lists = async { hmcListLocalDataSource.getHMCLists() }
             withContext(Dispatchers.Main) {
                 listView.showLists(lists.await())
             }
         }
     }
 
+    /**
+     * Calls the view's show add list which launches an activity
+     */
     override fun addList() {
         Log.i("Lists Presenter", "Inside load lists")
         listView.showAddList()
     }
 
+    /**
+     * calls the loadlists() presenter method when the activity starts
+     */
     override fun start() {
         loadLists()
     }
 
+    /**
+     * called from the view, tells the view to open an activity when a specific id
+     */
     override fun openListDetails(requestedList: HMCLists) {
         Log.i("Lists Presenter", "Inside load lists")
+        listView.showListDetailsUi(requestedList.id)
     }
 
 

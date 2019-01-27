@@ -8,10 +8,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.BaseAdapter
 import android.widget.LinearLayout
+import android.widget.ListView
+import android.widget.TextView
 import commanderpepper.helpmechoose.R
 import commanderpepper.helpmechoose.addeditlist.AddEditListActivity
 import commanderpepper.helpmechoose.data.model.HMCLists
+import commanderpepper.helpmechoose.listsdetails.ListsDetailsActivity
 
 class ListsFragment : Fragment(), ListsContract.View {
 
@@ -19,6 +23,15 @@ class ListsFragment : Fragment(), ListsContract.View {
 
     private lateinit var listsView: LinearLayout
     private lateinit var noListsMessageView: LinearLayout
+
+    internal var listListener: ListItemListener = object : ListItemListener {
+        override fun onListClick(clickedList: HMCLists) {
+            presenter.openListDetails(clickedList)
+        }
+
+    }
+
+    private val listsAdapter : ListAdapter = ListAdapter(ArrayList(0), listListener)
 
     override fun onResume() {
         super.onResume()
@@ -31,6 +44,10 @@ class ListsFragment : Fragment(), ListsContract.View {
         with(root) {
             listsView = this.findViewById(R.id.lists_linearLayout)
             noListsMessageView = this.findViewById(R.id.noHMCLists)
+            with(this){
+                this.findViewById<ListView>(R.id.hmc_lists).apply { adapter = listsAdapter }
+            }
+
         }
 
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_add_task).apply {
@@ -43,12 +60,13 @@ class ListsFragment : Fragment(), ListsContract.View {
 
     override fun showLists(lists: List<HMCLists>) {
         Log.i("Lists Presenter", lists.toString())
-        showNoList()
+//        showNoList()
         if (lists.isEmpty()) {
             showNoList()
         } else {
             listsView.visibility = View.VISIBLE
             noListsMessageView.visibility = View.GONE
+            listsAdapter.lists = lists
         }
     }
 
@@ -64,7 +82,46 @@ class ListsFragment : Fragment(), ListsContract.View {
     }
 
     override fun showListDetailsUi(listId: String) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val intent = Intent(context, ListsDetailsActivity::class.java).apply {
+            putExtra(ListsDetailsActivity.EXTRA_LIST_ID, listId)
+        }
+        startActivity(intent)
+    }
+
+    private class ListAdapter(lists: List<HMCLists>, private val listListener: ListItemListener) : BaseAdapter() {
+
+        var lists: List<HMCLists> = lists
+            set(lists) {
+                field = lists
+                notifyDataSetChanged()
+            }
+
+        override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
+            val hmclist = getItem(position)
+            val rowView = convertView ?: LayoutInflater.from(parent?.context)
+                    .inflate(R.layout.list_item, parent, false)
+
+            with(rowView.findViewById<TextView>(R.id.listTitle)) {
+                text = hmclist.name
+            }
+
+            rowView.setOnClickListener {
+                listListener.onListClick(hmclist)
+            }
+
+            return rowView
+        }
+
+        override fun getItem(position: Int) = lists[position]
+
+        override fun getItemId(position: Int) = position.toLong()
+
+        override fun getCount() = lists.size
+
+    }
+
+    interface ListItemListener {
+        fun onListClick(clickedList: HMCLists)
     }
 
     companion object {

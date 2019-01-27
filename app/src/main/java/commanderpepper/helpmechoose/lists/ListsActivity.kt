@@ -1,10 +1,9 @@
 package commanderpepper.helpmechoose.lists
 
-import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import commanderpepper.helpmechoose.R
-import commanderpepper.helpmechoose.data.HMCListRepository
+import commanderpepper.helpmechoose.data.HMCListLocalDataSource
 import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.util.replaceFragmentInActivity
 
@@ -26,10 +25,10 @@ class ListsActivity : AppCompatActivity() {
         val database = HMCListDatabase
 
         // Set up the HMC Lists Repository
-        val hmcListRepository = HMCListRepository(database.getInstance(this.applicationContext))
+        val hmcListLocalDataSource = HMCListLocalDataSource.getInstance(database.getInstance(this.applicationContext).hmcDao())
 
         // Set up the presenter
-        listsPresenter = ListsPresenter(listsFragment, hmcListRepository)
+        listsPresenter = ListsPresenter(listsFragment, hmcListLocalDataSource)
 
     }
 }

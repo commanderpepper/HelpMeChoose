@@ -3,6 +3,8 @@ package commanderpepper.helpmechoose.addeditlist
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import commanderpepper.helpmechoose.R
+import commanderpepper.helpmechoose.data.HMCListLocalDataSource
+import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.util.replaceFragmentInActivity
 
 class AddEditListActivity : AppCompatActivity() {
@@ -18,6 +20,12 @@ class AddEditListActivity : AppCompatActivity() {
             replaceFragmentInActivity(it, R.id.contentFrameAddEdit)
         }
 
-        addEditPresenter = AddEditListPresenter(addEditFragment)
+        // Set up the database
+        val database = HMCListDatabase
+
+        // Sets up the local data source
+        val dataSource = HMCListLocalDataSource.getInstance(database.getInstance(this.applicationContext).hmcDao())
+
+        addEditPresenter = AddEditListPresenter(addEditFragment, dataSource)
     }
 }

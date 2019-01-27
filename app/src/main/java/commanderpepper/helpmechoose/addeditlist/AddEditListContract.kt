@@ -12,11 +12,17 @@ interface AddEditListContract {
 
         fun showHMCLists()
 
+        fun showSnackBar()
+
     }
 
     interface Presenter : BasePresenter {
 
         fun addHMCList(addList: HMCLists)
+
+        fun addHMCListValues(listKeys: String, uuid: String)
+
+        fun saveListToDatabase(addList: HMCLists, listKeys: String, uuid: String)
 
     }
 }

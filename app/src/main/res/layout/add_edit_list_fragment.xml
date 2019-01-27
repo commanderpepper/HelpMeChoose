@@ -21,11 +21,12 @@
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Title" />
 
         <EditText
-            android:id="@+id/add_list_desc"
+            android:id="@+id/add_list"
+            android:inputType="textMultiLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="top"
-            android:hint="@string/description" />
+            android:hint="@string/List_hint" />
 
     </LinearLayout>
 

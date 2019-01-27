@@ -26,4 +26,6 @@ interface HMCListDataSource {
     suspend fun insertValue(hmclistsvalues: HMCListsValues)
 
     suspend fun getHMCListsValues(id : String): List<HMCListsValues>
+
+    suspend fun getListOfValues(id: String): List<String>
 }

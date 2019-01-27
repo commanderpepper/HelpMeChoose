@@ -5,7 +5,6 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.data.model.HMCLists
-import commanderpepper.helpmechoose.data.model.HMCListsValues
 import org.hamcrest.CoreMatchers.`is`
 import org.hamcrest.CoreMatchers.notNullValue
 import org.hamcrest.MatcherAssert.assertThat
@@ -31,7 +30,6 @@ class HMCListDaoTest {
     fun closeDb() {
         database.close()
     }
-
 
     /**
      * Insert a HMC list and get it using by it's id
@@ -59,27 +57,6 @@ class HMCListDaoTest {
     }
 
     @Test
-    fun insertHMCListAndHMCListValues() {
-        //Insert a HMC lists
-        database.hmcDao().insertList(DEFAULT_HMCLIST)
-
-//        for (i in DEFAULT_HMCLIST.matrix.keys) {
-//            val lv = HMCListsValues(DEFAULT_ID, i.first, i.second, DEFAULT_HMCLIST.matrix[i] ?: "")
-//            database.hmcDao().insertValue(lv)
-//        }
-
-        for (i in DEFAULT_HMCLIST.uniquePairs.keys) {
-            val vl = HMCListsValues(DEFAULT_ID, i.first(), i.last(), DEFAULT_HMCLIST.uniquePairs[i]
-                    ?: "")
-            database.hmcDao().insertValue(vl)
-        }
-
-        val listw = database.hmcDao().getHMCListsValues(DEFAULT_ID)
-
-        assertThat(listw.size, `is`(3))
-    }
-
-    @Test
     fun insertHMCListAndDelete() {
         // Insert a HMC List
         database.hmcDao().insertList(DEFAULT_HMCLIST)
@@ -93,6 +70,53 @@ class HMCListDaoTest {
         assertThat(loaded, Matchers.`is`(Matchers.nullValue()))
     }
 
+    @Test
+    fun createInitialHMCListsValueFromListOfString() {
+        // Insert a HMC List
+        database.hmcDao().insertList(DEFAULT_HMCLIST)
+
+        val list = DEFAULT_HMCLIST.createHMCValues(LIST_OF_FOUR, DEFAULT_ID)
+        for (l in list) {
+            database.hmcDao().insertValue(l)
+        }
+
+        val hmclist = database.hmcDao().getHMCListsValues(DEFAULT_ID)
+
+        assertThat(hmclist.size, `is`(6))
+    }
+
+    @Test
+    fun makeMatrixFromListOfHMCListsValues() {
+        // Insert a HMC List
+        database.hmcDao().insertList(DEFAULT_HMCLIST)
+
+        val list = DEFAULT_HMCLIST.createHMCValues(LIST_OF_FOUR, DEFAULT_ID)
+        for (l in list) {
+            database.hmcDao().insertValue(l)
+        }
+
+        val hmclist = database.hmcDao().getHMCListsValues(DEFAULT_ID)
+        val map = DEFAULT_HMCLIST.makeMapFromHMCValues(hmclist)
+
+        assertThat(map.size, `is`(12))
+    }
+
+    @Test
+    fun makeListOfHMCListsValuesFromMap() {
+        // Insert a HMC List
+        database.hmcDao().insertList(DEFAULT_HMCLIST)
+
+        val list = DEFAULT_HMCLIST.createHMCValues(LIST_OF_FOUR, DEFAULT_ID)
+        for (l in list) {
+            database.hmcDao().insertValue(l)
+        }
+
+        val hmclist = database.hmcDao().getHMCListsValues(DEFAULT_ID)
+        val map = DEFAULT_HMCLIST.makeMapFromHMCValues(hmclist)
+        val anotherlist = DEFAULT_HMCLIST.makeListOfValuesFromMap(map, DEFAULT_ID)
+
+        assertThat(anotherlist.size, `is`(6))
+    }
 
     private fun assertHMCList(
             hmclist: HMCLists?,
@@ -109,6 +133,8 @@ class HMCListDaoTest {
         private val DEFAULT_ID = "id"
 
         private val DEFAULT_LIST = mutableSetOf("A", "B", "C")
+        private val LIST_OF_TWO = listOf("A","B")
+        private val LIST_OF_FOUR = listOf("A","B","C","D")
 
         private val DEFAULT_HMCLIST = HMCLists(DEFAULT_ID, DEFAULT_NAME).apply {
             matrix = this.defineMatrix(DEFAULT_LIST)

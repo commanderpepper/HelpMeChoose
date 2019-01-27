@@ -5,19 +5,16 @@ import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
 import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.data.model.HMCLists
-import commanderpepper.helpmechoose.data.HMCListLocalDataSource
 import commanderpepper.helpmechoose.util.launchCoroutine
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import org.hamcrest.CoreMatchers
 import org.hamcrest.MatcherAssert
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
+import org.hamcrest.Matchers.nullValue
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.hamcrest.Matchers.nullValue
 
 @RunWith(AndroidJUnit4::class)
 class HMCListLocalDataSourceTest {

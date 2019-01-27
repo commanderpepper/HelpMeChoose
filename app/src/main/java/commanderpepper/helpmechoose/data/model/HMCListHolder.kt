@@ -6,7 +6,7 @@ package commanderpepper.helpmechoose.data.model
  * It would have
  *      matrix - a mutable map that contains pairs as keys
  *      name - a name
- *      description - a description of the list
+ *      list - a list of the list
  *      id - unique ID of the HMCList
  */
 
