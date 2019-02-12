@@ -81,6 +81,9 @@ class ListsFragment : Fragment(), ListsContract.View {
         noListsMessageView.visibility = View.VISIBLE
     }
 
+    /**
+     * Not being used, is unnecessary
+     */
     override fun showListDetailsUi(listId: String) {
         val intent = Intent(context, ListsDetailsActivity::class.java).apply {
             putExtra(ListsDetailsActivity.EXTRA_LIST_ID, listId)
