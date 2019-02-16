@@ -48,5 +48,17 @@ class ListsPresenter(val listView: ListsContract.View,
         listView.showListDetailsUi(requestedList.id)
     }
 
+    /**
+     * Delete an item in the database
+     */
+    override fun deleteList(listId: String) {
+        GlobalScope.launch(Dispatchers.IO) {
+            async { hmcListLocalDataSource.deleteHMCList(listId) }
+            withContext(Dispatchers.Main) {
+                this@ListsPresenter.loadLists()
+            }
+        }
+    }
+
 
 }

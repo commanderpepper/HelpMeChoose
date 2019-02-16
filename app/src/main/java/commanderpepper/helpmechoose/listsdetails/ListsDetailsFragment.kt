@@ -73,9 +73,9 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View{
             val string = getItem(position)
 
             val rowView = convertView ?: LayoutInflater.from(parent?.context)
-                    .inflate(R.layout.list_item, parent, false)
+                    .inflate(R.layout.value_item, parent, false)
 
-            with(rowView.findViewById<TextView>(R.id.listTitle)) {
+            with(rowView.findViewById<TextView>(R.id.valueText)) {
                 text = string
             }
 

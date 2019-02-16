@@ -71,6 +71,32 @@ class HMCListDaoTest {
     }
 
     @Test
+    fun insertHMCListandValuesThenDelete() {
+        // Insert a HMC List
+        database.hmcDao().insertList(DEFAULT_HMCLIST)
+
+        // Retrieve a HMC list by ID from the database
+        val loaded = database.hmcDao().getHMCListById(DEFAULT_HMCLIST.id)
+
+        val list = DEFAULT_HMCLIST.createHMCValues(LIST_OF_FOUR, DEFAULT_ID)
+        for (l in list) {
+            database.hmcDao().insertValue(l)
+        }
+
+        val hmclist = database.hmcDao().getHMCListsValues(DEFAULT_ID)
+
+        assertThat(hmclist.size, `is`(6))
+
+        // Delete HMC List
+        database.hmcDao().deleteHMCListById(DEFAULT_ID)
+
+        val r_list = database.hmcDao().getHMCListsValues(DEFAULT_ID)
+
+        // assertThat(loaded, Matchers.`is`(Matchers.nullValue()))
+        assertThat(r_list.size, Matchers.`is`(0))
+    }
+
+    @Test
     fun createInitialHMCListsValueFromListOfString() {
         // Insert a HMC List
         database.hmcDao().insertList(DEFAULT_HMCLIST)
@@ -133,8 +159,8 @@ class HMCListDaoTest {
         private val DEFAULT_ID = "id"
 
         private val DEFAULT_LIST = mutableSetOf("A", "B", "C")
-        private val LIST_OF_TWO = listOf("A","B")
-        private val LIST_OF_FOUR = listOf("A","B","C","D")
+        private val LIST_OF_TWO = listOf("A", "B")
+        private val LIST_OF_FOUR = listOf("A", "B", "C", "D")
 
         private val DEFAULT_HMCLIST = HMCLists(DEFAULT_ID, DEFAULT_NAME).apply {
             matrix = this.defineMatrix(DEFAULT_LIST)

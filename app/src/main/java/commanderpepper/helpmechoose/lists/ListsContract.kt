@@ -26,6 +26,8 @@ interface ListsContract {
 
         fun openListDetails(requestedList : HMCLists)
 
+        fun deleteList(listId: String)
+
     }
 
 }

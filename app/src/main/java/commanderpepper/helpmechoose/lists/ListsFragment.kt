@@ -8,10 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.LinearLayout
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import commanderpepper.helpmechoose.R
 import commanderpepper.helpmechoose.addeditlist.AddEditListActivity
 import commanderpepper.helpmechoose.data.model.HMCLists
@@ -29,9 +26,13 @@ class ListsFragment : Fragment(), ListsContract.View {
             presenter.openListDetails(clickedList)
         }
 
+        override fun onDeleteClick(id: String) {
+            presenter.deleteList(id)
+        }
+
     }
 
-    private val listsAdapter : ListAdapter = ListAdapter(ArrayList(0), listListener)
+    private val listsAdapter: ListAdapter = ListAdapter(ArrayList(0), listListener)
 
     override fun onResume() {
         super.onResume()
@@ -44,7 +45,7 @@ class ListsFragment : Fragment(), ListsContract.View {
         with(root) {
             listsView = this.findViewById(R.id.lists_linearLayout)
             noListsMessageView = this.findViewById(R.id.noHMCLists)
-            with(this){
+            with(this) {
                 this.findViewById<ListView>(R.id.hmc_lists).apply { adapter = listsAdapter }
             }
 
@@ -103,6 +104,10 @@ class ListsFragment : Fragment(), ListsContract.View {
             val hmclist = getItem(position)
             val rowView = convertView ?: LayoutInflater.from(parent?.context)
                     .inflate(R.layout.list_item, parent, false)
+            val deleteItem: ImageButton = rowView.findViewById(R.id.deleteList)
+            deleteItem.setOnClickListener {
+                listListener.onDeleteClick(hmclist.id)
+            }
 
             with(rowView.findViewById<TextView>(R.id.listTitle)) {
                 text = hmclist.name
@@ -125,6 +130,8 @@ class ListsFragment : Fragment(), ListsContract.View {
 
     interface ListItemListener {
         fun onListClick(clickedList: HMCLists)
+
+        fun onDeleteClick(id: String)
     }
 
     companion object {

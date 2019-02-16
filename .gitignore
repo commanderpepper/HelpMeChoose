@@ -10,3 +10,6 @@
 /captures
 .externalNativeBuild
 .idea/assetWizardSettings.xml
+local.properties
+.idea
+.gradle/wrapper
