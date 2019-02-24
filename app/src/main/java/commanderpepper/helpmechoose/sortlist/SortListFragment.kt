@@ -22,6 +22,7 @@ class SortListFragment : Fragment(), SortListContract.View {
         presenter.start()
     }
 
+    // Sets up the root so the buttons views can be created and set their behavior
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.sort_list_fragment, container, false)
 
@@ -54,6 +55,7 @@ class SortListFragment : Fragment(), SortListContract.View {
         presenter.saveResult(result)
     }
 
+    // Go back to the detail list view
     override fun showListDetail() {
         with(activity) {
             this!!.setResult(Activity.RESULT_OK)

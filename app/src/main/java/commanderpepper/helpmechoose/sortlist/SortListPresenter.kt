@@ -21,6 +21,7 @@ class SortListPresenter(private val listId: String,
         }
     }
 
+    // Retrieve the keys using the counter and passes it to the fragment
     override fun giveOptions() {
         GlobalScope.launch {
             val optionA = listOfValue[counter].key1
@@ -31,6 +32,10 @@ class SortListPresenter(private val listId: String,
         }
     }
 
+    /**
+     * Save the result from the method
+     * A lot is being done in the method like saving a counter so i think this maybe need to be countdown some
+     */
     override fun saveResult(result: String) {
         GlobalScope.launch {
             Log.i("Humza", "$counter")

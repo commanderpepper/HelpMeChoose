@@ -21,10 +21,12 @@ class AddEditListPresenter(val addEditListView: AddEditListContract.View,
         hmcDataSource.hmclistdao.insertList(addList)
     }
 
+    // I don't need to initialize anything I think
     override fun start() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    // Save the info to the database
     override fun addHMCListValues(listKeys: String, uuid: String) {
         val list = listKeys.split("\n").map { it.trim() }.toSet().toList()
         val hmclist = createHMCValues(list, uuid)
@@ -33,8 +35,8 @@ class AddEditListPresenter(val addEditListView: AddEditListContract.View,
         }
     }
 
+    // Save the hmc list and hmc list values to the database
     override fun saveListToDatabase(addList: HMCLists, listKeys: String, uuid: String) {
-
         if (addList.name == "" || addList.name == null || listKeys.isEmpty()) {
             addEditListView.showSnackBar()
         } else {
@@ -62,7 +64,6 @@ class AddEditListPresenter(val addEditListView: AddEditListContract.View,
             }
         }.toList()
     }
-
 
     private fun createTask() {
         addEditListView.showHMCLists()

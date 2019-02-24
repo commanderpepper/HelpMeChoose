@@ -41,7 +41,7 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View{
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_edit_list).apply {
             setImageResource(R.drawable.ic_edit)
             setOnClickListener { presenter.openEditList() }
-        }
+        }.hide()
 
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_sort_list).apply {
             setImageResource(R.drawable.ic_sort)
@@ -55,6 +55,7 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View{
         stringAdapter.list = list
     }
 
+    // Unused for now
     override fun showAddEditList(listId: String) {
         Log.i("Humza", "Filler")
     }

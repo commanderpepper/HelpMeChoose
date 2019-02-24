@@ -20,6 +20,7 @@ class ListsDetailsPresenter(
         loadList()
     }
 
+    // Retrieve a list that is sorted and gives that list to the fragment
     override fun loadList() {
         Log.i("Lists Details Presenter", "Inside load list")
         GlobalScope.launch(Dispatchers.IO) {
@@ -41,6 +42,7 @@ class ListsDetailsPresenter(
         detailView.showSortLst(listId)
     }
 
+    // Unused for now
     override fun openEditList() {
         Log.i("Humza", "Work in Progress")
     }
@@ -61,6 +63,7 @@ class ListsDetailsPresenter(
         }
     }
 
+    // Makes a sorted list from the database
     private fun makeSortedListFromMatrix(matrix: MutableMap<Pair<String, String>, String>): List<String> {
         val sortedList = mutableListOf<String>()
         val rankingsMap = mutableMapOf<String, Int>()

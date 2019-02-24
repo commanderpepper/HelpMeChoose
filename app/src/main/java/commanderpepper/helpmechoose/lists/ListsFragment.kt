@@ -59,6 +59,7 @@ class ListsFragment : Fragment(), ListsContract.View {
         return root
     }
 
+    // If the list is empty, if the user hasn't made a list then it asks
     override fun showLists(lists: List<HMCLists>) {
         Log.i("Lists Presenter", lists.toString())
 //        showNoList()
@@ -71,10 +72,10 @@ class ListsFragment : Fragment(), ListsContract.View {
         }
     }
 
+    // Makes an intent and goes to the activity to make a list
     override fun showAddList() {
         val intent = Intent(context, AddEditListActivity::class.java)
         startActivity(intent)
-//        startActivityForResult(intent, AddEditListActivity.REQUEST_ADD_LIST)
     }
 
     override fun showNoList() {
@@ -83,7 +84,7 @@ class ListsFragment : Fragment(), ListsContract.View {
     }
 
     /**
-     * Not being used, is unnecessary
+     * Goes to a list
      */
     override fun showListDetailsUi(listId: String) {
         val intent = Intent(context, ListsDetailsActivity::class.java).apply {

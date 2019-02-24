@@ -35,10 +35,12 @@ class AddEditListFragment : Fragment(), AddEditListContract.View {
         return root
     }
 
+    // Not being used
     override fun showListAddition() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
+    // Return to the previous activity
     override fun showHMCLists() {
         with(activity) {
             this!!.setResult(Activity.RESULT_OK)
@@ -46,16 +48,16 @@ class AddEditListFragment : Fragment(), AddEditListContract.View {
         }
     }
 
+    // Show a snack bar if the list or title is blank
     override fun showSnackBar() {
         Snackbar.make(this!!.view!!, "Your title or list is empty", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
     }
 
+    // Send the info to the presenter to save a list
     private fun addHMCList(name: String, list: String) {
         val uuid = UUID.randomUUID().toString()
         val hmcList = HMCLists(uuid, name)
-//        presenter.addHMCList(hmcList)
-//        presenter.addHMCListValues(list, uuid)
         presenter.saveListToDatabase(hmcList, list, uuid)
     }
 

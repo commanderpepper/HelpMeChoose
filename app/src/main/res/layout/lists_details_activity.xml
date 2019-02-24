@@ -32,9 +32,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_layout_margin"
             app:fabSize="normal"
-            app:layout_anchor="@id/fab_edit_list"
-            android:layout_gravity="top|center"
-            app:layout_anchorGravity="top|center"/>
+            app:useCompatPadding="true"
+            app:layout_anchor="@id/contentFrameListDetail"
+            app:layout_anchorGravity="bottom|right|end"/>
 
     </android.support.design.widget.CoordinatorLayout>
 
