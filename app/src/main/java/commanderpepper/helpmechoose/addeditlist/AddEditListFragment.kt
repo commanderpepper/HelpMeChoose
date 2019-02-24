@@ -51,7 +51,6 @@ class AddEditListFragment : Fragment(), AddEditListContract.View {
                 .setAction("Action", null).show()
     }
 
-    // TODO make a method to call the presenter, this method will pass a HMC Lists to the presenter to create something
     private fun addHMCList(name: String, list: String) {
         val uuid = UUID.randomUUID().toString()
         val hmcList = HMCLists(uuid, name)

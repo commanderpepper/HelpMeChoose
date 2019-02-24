@@ -1,5 +1,6 @@
 package commanderpepper.helpmechoose.listsdetails
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.v4.app.Fragment
@@ -13,6 +14,7 @@ import android.widget.ListView
 import android.widget.TextView
 import commanderpepper.helpmechoose.R
 import commanderpepper.helpmechoose.data.model.HMCListsValues
+import commanderpepper.helpmechoose.sortlist.SortListActivity
 
 class ListDetailsFragment : Fragment(), ListsDetailsContract.View{
 
@@ -59,6 +61,9 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View{
 
     override fun showSortLst(listId: String) {
         Log.i("Humza", "Filler")
+        val intent = Intent(context, SortListActivity::class.java)
+        intent.putExtra("taskId", listId)
+        startActivity(intent)
     }
 
     private class StringAdapter(listOfString: List<String>): BaseAdapter() {

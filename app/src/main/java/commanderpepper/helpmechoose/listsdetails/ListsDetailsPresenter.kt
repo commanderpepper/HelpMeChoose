@@ -38,6 +38,7 @@ class ListsDetailsPresenter(
 
     override fun openSortList() {
         Log.i("Humza", "Work in Progress")
+        detailView.showSortLst(listId)
     }
 
     override fun openEditList() {

@@ -9,16 +9,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".sortlist.SortListActivity"></activity>
-        <activity android:name=".listsdetails.ListsDetailsActivity" />
-        <activity android:name=".lists.ListsActivity">
+        <activity
+            android:name=".sortlist.SortListActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".listsdetails.ListsDetailsActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".lists.ListsActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".addeditlist.AddEditListActivity" />
+        <activity
+            android:name=".addeditlist.AddEditListActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
