@@ -3,6 +3,6 @@
     <string name="add_a_list">Add a list!</string>
     <string name="title">Title</string>
     <string name="description">Description</string>
-    <string name="List_hint">Enter a list to sort, each string is separated by a new line</string>
+    <string name="List_hint">Enter a list to sort, each item is separated by a new line</string>
     <string name="which_is_better">Which is better?</string>
 </resources>

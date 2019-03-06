@@ -1,5 +1,7 @@
 package commanderpepper.helpmechoose.lists
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
@@ -27,7 +29,16 @@ class ListsFragment : Fragment(), ListsContract.View {
         }
 
         override fun onDeleteClick(id: String) {
-            presenter.deleteList(id)
+            val alertBuilder: AlertDialog.Builder? = activity?.let {
+                AlertDialog.Builder(it)
+            }
+            alertBuilder?.setMessage("You'll delete this sweet list forever!")
+                    ?.setTitle("Delete the list?")
+            alertBuilder?.apply { setPositiveButton("YES") { dialog, which -> presenter.deleteList(id) } }
+            alertBuilder?.apply { setNegativeButton("NO") { dialog, which -> Log.i("Delete List", id) } }
+
+            alertBuilder!!.show()
+//            presenter.deleteList(id)
         }
 
     }

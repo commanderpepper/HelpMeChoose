@@ -50,7 +50,7 @@ class AddEditListFragment : Fragment(), AddEditListContract.View {
 
     // Show a snack bar if the list or title is blank
     override fun showSnackBar() {
-        Snackbar.make(this!!.view!!, "Your title or list is empty", Snackbar.LENGTH_LONG)
+        Snackbar.make(this!!.view!!, "Your title is empty or your list isn't large enough", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
     }
 

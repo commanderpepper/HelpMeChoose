@@ -7,13 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import commanderpepper.helpmechoose.R
 
 class SortListFragment : Fragment(), SortListContract.View {
     override lateinit var presenter: SortListContract.Presenter
 
-    private lateinit var optionA: Button
-    private lateinit var optionB: Button
+    private lateinit var optionA: TextView
+    private lateinit var optionB: TextView
     private lateinit var neither: Button
 
 

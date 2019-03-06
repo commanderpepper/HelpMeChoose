@@ -37,7 +37,7 @@ class AddEditListPresenter(val addEditListView: AddEditListContract.View,
 
     // Save the hmc list and hmc list values to the database
     override fun saveListToDatabase(addList: HMCLists, listKeys: String, uuid: String) {
-        if (addList.name == "" || addList.name == null || listKeys.isEmpty()) {
+        if (addList.name == "" || listKeys.split("\n").size <= 1 || listKeys.isEmpty()) {
             addEditListView.showSnackBar()
         } else {
             GlobalScope.launch(Dispatchers.IO) {
