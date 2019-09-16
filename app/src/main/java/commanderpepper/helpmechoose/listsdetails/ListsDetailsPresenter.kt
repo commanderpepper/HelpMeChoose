@@ -9,7 +9,7 @@ class ListsDetailsPresenter(
         private val listId: String,
         val detailView: ListsDetailsContract.View,
         val hmcListLocalDataSource: HMCListLocalDataSource
-) : ListsDetailsContract.Presenter {
+) : ListsDetailsContract.Presenter, CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     // Sets this presenter as the instance of the presenter in the view
     init {
@@ -23,7 +23,7 @@ class ListsDetailsPresenter(
     // Retrieve a list that is sorted and gives that list to the fragment
     override fun loadList() {
         Log.i("Lists Details Presenter", "Inside load list")
-        GlobalScope.launch(Dispatchers.IO) {
+        launch(Dispatchers.IO) {
             val list = async { hmcListLocalDataSource.getHMCListsValues(listId) }.await()
             val matrix = async { makeMapFromHMCValues(list) }.await()
             val sortedList = async { makeSortedListFromMatrix(matrix) }.await()

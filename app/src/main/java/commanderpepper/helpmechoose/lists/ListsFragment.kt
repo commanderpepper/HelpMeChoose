@@ -38,9 +38,7 @@ class ListsFragment : Fragment(), ListsContract.View {
             alertBuilder?.apply { setNegativeButton("NO") { dialog, which -> Log.i("Delete List", id) } }
 
             alertBuilder!!.show()
-//            presenter.deleteList(id)
         }
-
     }
 
     private val listsAdapter: ListAdapter = ListAdapter(ArrayList(0), listListener)

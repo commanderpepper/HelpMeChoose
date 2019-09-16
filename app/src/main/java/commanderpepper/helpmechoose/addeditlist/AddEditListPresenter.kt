@@ -3,6 +3,7 @@ package commanderpepper.helpmechoose.addeditlist
 import commanderpepper.helpmechoose.data.HMCListLocalDataSource
 import commanderpepper.helpmechoose.data.model.HMCLists
 import commanderpepper.helpmechoose.data.model.HMCListsValues
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -11,7 +12,8 @@ import java.util.Arrays.asList
 
 
 class AddEditListPresenter(val addEditListView: AddEditListContract.View,
-                           val hmcDataSource: HMCListLocalDataSource) : AddEditListContract.Presenter {
+                           val hmcDataSource: HMCListLocalDataSource)
+    : AddEditListContract.Presenter, CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     init {
         addEditListView.presenter = this
@@ -40,7 +42,7 @@ class AddEditListPresenter(val addEditListView: AddEditListContract.View,
         if (addList.name == "" || listKeys.split("\n").size <= 1 || listKeys.isEmpty()) {
             addEditListView.showSnackBar()
         } else {
-            GlobalScope.launch(Dispatchers.IO) {
+            launch(Dispatchers.IO) {
                 addHMCList(addList)
                 addHMCListValues(listKeys, uuid)
             }

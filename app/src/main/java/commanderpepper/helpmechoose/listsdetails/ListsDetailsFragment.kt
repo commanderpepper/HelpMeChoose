@@ -16,7 +16,7 @@ import commanderpepper.helpmechoose.R
 import commanderpepper.helpmechoose.data.model.HMCListsValues
 import commanderpepper.helpmechoose.sortlist.SortListActivity
 
-class ListDetailsFragment : Fragment(), ListsDetailsContract.View{
+class ListDetailsFragment : Fragment(), ListsDetailsContract.View {
 
     private lateinit var listsView: ListView
     override lateinit var presenter: ListsDetailsContract.Presenter
