@@ -10,14 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".sortlist.SortListActivity"
-            android:screenOrientation="portrait"></activity>
+            android:name=".sortlist.SortListActivity"></activity>
         <activity
-            android:name=".listsdetails.ListsDetailsActivity"
-            android:screenOrientation="portrait" />
+            android:name=".listsdetails.ListsDetailsActivity"/>
         <activity
-            android:name=".lists.ListsActivity"
-            android:screenOrientation="portrait">
+            android:name=".lists.ListsActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,8 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".addeditlist.AddEditListActivity"
-            android:screenOrientation="portrait" />
+            android:name=".addeditlist.AddEditListActivity"/>
     </application>
 
 </manifest>
