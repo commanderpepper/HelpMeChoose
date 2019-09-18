@@ -1,18 +1,21 @@
 package commanderpepper.helpmechoose.lists
 
 import android.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.lifecycle.ViewModelProviders
 import commanderpepper.helpmechoose.R
 import commanderpepper.helpmechoose.addeditlist.AddEditListActivity
+import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.data.model.HMCLists
 import commanderpepper.helpmechoose.listsdetails.ListsDetailsActivity
 
@@ -64,6 +67,14 @@ class ListsFragment : Fragment(), ListsContract.View {
             setImageResource(R.drawable.ic_add)
             setOnClickListener { presenter.addList() }
         }
+
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = HMCListDatabase.getInstance(application).hmcDao()
+
+        val viewModelFactory = ListsViewModelFactory(dataSource, application)
+
+        val listViewModel = ViewModelProviders.of(this, viewModelFactory).get(ListsViewModel::class.java)
 
         return root
     }

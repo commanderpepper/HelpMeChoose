@@ -1,6 +1,6 @@
 package commanderpepper.helpmechoose.data
 
-import android.support.annotation.VisibleForTesting
+import androidx.annotation.VisibleForTesting
 import commanderpepper.helpmechoose.data.Room.HMCListDAO
 import commanderpepper.helpmechoose.data.model.HMCLists
 import commanderpepper.helpmechoose.data.model.HMCListsValues
