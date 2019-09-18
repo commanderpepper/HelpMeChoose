@@ -6,7 +6,8 @@ import commanderpepper.helpmechoose.data.model.HMCLists
 import kotlinx.coroutines.*
 
 class ListsPresenter(val listView: ListsContract.View,
-                     val hmcListLocalDataSource: HMCListLocalDataSource) : ListsContract.Presenter {
+                     val hmcListLocalDataSource: HMCListLocalDataSource) :
+        ListsContract.Presenter, CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     // Sets this presenter as the instance of the presenter in the view
     init {
@@ -17,7 +18,7 @@ class ListsPresenter(val listView: ListsContract.View,
      * Retrieves the a list of hmc list from the database and passes that info to the view
      */
     override fun loadLists() {
-        GlobalScope.launch(Dispatchers.IO) {
+        launch(Dispatchers.IO) {
             val lists = async { hmcListLocalDataSource.getHMCLists() }
             withContext(Dispatchers.Main) {
                 listView.showLists(lists.await())
@@ -52,8 +53,8 @@ class ListsPresenter(val listView: ListsContract.View,
      * Delete an item in the database
      */
     override fun deleteList(listId: String) {
-        GlobalScope.launch(Dispatchers.IO) {
-            async { hmcListLocalDataSource.deleteHMCList(listId) }
+        launch(Dispatchers.IO) {
+            hmcListLocalDataSource.deleteHMCList(listId)
             withContext(Dispatchers.Main) {
                 this@ListsPresenter.loadLists()
             }
