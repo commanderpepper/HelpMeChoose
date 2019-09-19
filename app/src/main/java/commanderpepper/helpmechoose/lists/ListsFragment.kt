@@ -18,13 +18,19 @@ import commanderpepper.helpmechoose.addeditlist.AddEditListActivity
 import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.data.model.HMCLists
 import commanderpepper.helpmechoose.listsdetails.ListsDetailsActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class ListsFragment : Fragment(), ListsContract.View {
+class ListsFragment : Fragment(), ListsContract.View, CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     override lateinit var presenter: ListsContract.Presenter
 
     private lateinit var listsView: LinearLayout
     private lateinit var noListsMessageView: LinearLayout
+
+    private lateinit var listsViewModel: ListsViewModel
 
     internal var listListener: ListItemListener = object : ListItemListener {
         override fun onListClick(clickedList: HMCLists) {
@@ -48,11 +54,26 @@ class ListsFragment : Fragment(), ListsContract.View {
 
     override fun onResume() {
         super.onResume()
-        presenter.start()
+//        presenter.start()
+        launch {
+            listsViewModel.hmclist!!.collect {
+                showLists(it)
+            }
+        }
+//        showLists(listsViewModel.hmclist.collect { it })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.lists_fragment, container, false)
+
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = HMCListDatabase.getInstance(application).hmcDao()
+
+        val viewModelFactory = ListsViewModelFactory(dataSource, application)
+
+        listsViewModel = ViewModelProviders.of(this, viewModelFactory).get(ListsViewModel::class.java)
+
 
         with(root) {
             listsView = this.findViewById(R.id.lists_linearLayout)
@@ -67,14 +88,6 @@ class ListsFragment : Fragment(), ListsContract.View {
             setImageResource(R.drawable.ic_add)
             setOnClickListener { presenter.addList() }
         }
-
-        val application = requireNotNull(this.activity).application
-
-        val dataSource = HMCListDatabase.getInstance(application).hmcDao()
-
-        val viewModelFactory = ListsViewModelFactory(dataSource, application)
-
-        val listViewModel = ViewModelProviders.of(this, viewModelFactory).get(ListsViewModel::class.java)
 
         return root
     }
