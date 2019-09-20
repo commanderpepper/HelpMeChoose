@@ -1,11 +1,12 @@
 package commanderpepper.helpmechoose.data.Room
 
-import android.arch.persistence.room.Dao
-import android.arch.persistence.room.Insert
-import android.arch.persistence.room.OnConflictStrategy
-import android.arch.persistence.room.Query
+import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import commanderpepper.helpmechoose.data.model.HMCLists
 import commanderpepper.helpmechoose.data.model.HMCListsValues
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface HMCListDAO {
@@ -64,4 +65,14 @@ interface HMCListDAO {
      */
     @Query("SELECT key2 FROM HMCListsValues WHERE listid = :id")
     fun getListOfKey2(id: String): List<String>
+
+    /**
+     * Everything below this query will be used for the ViewModel + Flow stuff
+     */
+
+    /**
+     * Retrieve a list of HMC Lists and wrap inside a flow
+     */
+    @Query("SELECT * FROM HMCListNames")
+    fun getFlowHMCLists() : Flow<List<HMCLists>>
 }

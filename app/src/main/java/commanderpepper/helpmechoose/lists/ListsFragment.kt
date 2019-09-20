@@ -1,31 +1,40 @@
 package commanderpepper.helpmechoose.lists
 
 import android.app.AlertDialog
+import androidx.lifecycle.ViewModelProvider
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.FloatingActionButton
-import android.support.v4.app.Fragment
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.lifecycle.ViewModelProviders
 import commanderpepper.helpmechoose.R
 import commanderpepper.helpmechoose.addeditlist.AddEditListActivity
+import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.data.model.HMCLists
 import commanderpepper.helpmechoose.listsdetails.ListsDetailsActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
-class ListsFragment : Fragment(), ListsContract.View {
+class ListsFragment : Fragment(), ListsContract.View, CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     override lateinit var presenter: ListsContract.Presenter
 
     private lateinit var listsView: LinearLayout
     private lateinit var noListsMessageView: LinearLayout
 
+    private lateinit var listsViewModel: ListsViewModel
+
     internal var listListener: ListItemListener = object : ListItemListener {
         override fun onListClick(clickedList: HMCLists) {
-            presenter.openListDetails(clickedList)
+            showListDetailsUi(clickedList.id)
         }
 
         override fun onDeleteClick(id: String) {
@@ -34,7 +43,7 @@ class ListsFragment : Fragment(), ListsContract.View {
             }
             alertBuilder?.setMessage("You'll delete this sweet list forever!")
                     ?.setTitle("Delete the list?")
-            alertBuilder?.apply { setPositiveButton("YES") { dialog, which -> presenter.deleteList(id) } }
+            alertBuilder?.apply { setPositiveButton("YES") { dialog, which -> listsViewModel.deleteList(id) } }
             alertBuilder?.apply { setNegativeButton("NO") { dialog, which -> Log.i("Delete List", id) } }
 
             alertBuilder!!.show()
@@ -45,11 +54,24 @@ class ListsFragment : Fragment(), ListsContract.View {
 
     override fun onResume() {
         super.onResume()
-        presenter.start()
+        launch {
+            listsViewModel.hmclist.collect {
+                showLists(it)
+            }
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.lists_fragment, container, false)
+
+        val application = requireNotNull(this.activity).application
+
+        val dataSource = HMCListDatabase.getInstance(application).hmcDao()
+
+        val viewModelFactory = ListsViewModelFactory(dataSource, application)
+
+        listsViewModel = ViewModelProviders.of(this, viewModelFactory).get(ListsViewModel::class.java)
+
 
         with(root) {
             listsView = this.findViewById(R.id.lists_linearLayout)
@@ -62,7 +84,7 @@ class ListsFragment : Fragment(), ListsContract.View {
 
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_add_task).apply {
             setImageResource(R.drawable.ic_add)
-            setOnClickListener { presenter.addList() }
+            setOnClickListener { showAddList() }
         }
 
         return root
@@ -70,8 +92,7 @@ class ListsFragment : Fragment(), ListsContract.View {
 
     // If the list is empty, if the user hasn't made a list then it asks
     override fun showLists(lists: List<HMCLists>) {
-        Log.i("Lists Presenter", lists.toString())
-//        showNoList()
+        Log.i("ListsViewModel", lists.toString())
         if (lists.isEmpty()) {
             showNoList()
         } else {
