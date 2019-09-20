@@ -34,7 +34,7 @@ class ListsFragment : Fragment(), ListsContract.View, CoroutineScope by Coroutin
 
     internal var listListener: ListItemListener = object : ListItemListener {
         override fun onListClick(clickedList: HMCLists) {
-            presenter.openListDetails(clickedList)
+            showListDetailsUi(clickedList.id)
         }
 
         override fun onDeleteClick(id: String) {
@@ -43,7 +43,7 @@ class ListsFragment : Fragment(), ListsContract.View, CoroutineScope by Coroutin
             }
             alertBuilder?.setMessage("You'll delete this sweet list forever!")
                     ?.setTitle("Delete the list?")
-            alertBuilder?.apply { setPositiveButton("YES") { dialog, which -> presenter.deleteList(id) } }
+            alertBuilder?.apply { setPositiveButton("YES") { dialog, which -> listsViewModel.deleteList(id) } }
             alertBuilder?.apply { setNegativeButton("NO") { dialog, which -> Log.i("Delete List", id) } }
 
             alertBuilder!!.show()
@@ -54,13 +54,11 @@ class ListsFragment : Fragment(), ListsContract.View, CoroutineScope by Coroutin
 
     override fun onResume() {
         super.onResume()
-//        presenter.start()
         launch {
-            listsViewModel.hmclist!!.collect {
+            listsViewModel.hmclist.collect {
                 showLists(it)
             }
         }
-//        showLists(listsViewModel.hmclist.collect { it })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -86,7 +84,7 @@ class ListsFragment : Fragment(), ListsContract.View, CoroutineScope by Coroutin
 
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_add_task).apply {
             setImageResource(R.drawable.ic_add)
-            setOnClickListener { presenter.addList() }
+            setOnClickListener { showAddList() }
         }
 
         return root
@@ -94,8 +92,7 @@ class ListsFragment : Fragment(), ListsContract.View, CoroutineScope by Coroutin
 
     // If the list is empty, if the user hasn't made a list then it asks
     override fun showLists(lists: List<HMCLists>) {
-        Log.i("Lists Presenter", lists.toString())
-//        showNoList()
+        Log.i("ListsViewModel", lists.toString())
         if (lists.isEmpty()) {
             showNoList()
         } else {

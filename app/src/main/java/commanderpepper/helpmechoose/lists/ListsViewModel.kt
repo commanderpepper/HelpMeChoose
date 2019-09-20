@@ -10,18 +10,24 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
-class ListsViewModel(hmcListDAO: HMCListDAO,
+class ListsViewModel(val hmcListDAO: HMCListDAO,
                      application: Application) :
         AndroidViewModel(application),
         CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
-    var hmclist: Flow<List<HMCLists>>? = null
+    val hmclist: Flow<List<HMCLists>> = hmcListDAO.getFlowHMCLists()
 
-    init {
-        launch {
-            hmclist = withContext(Dispatchers.IO) {
-                hmcListDAO.getFlowHMCLists()
-            }
+//    init {
+//        launch {
+//            hmclist = withContext(Dispatchers.IO) {
+//                hmcListDAO.getFlowHMCLists()
+//            }
+//        }
+//    }
+
+    fun deleteList(listId: String) {
+        launch(Dispatchers.IO) {
+            hmcListDAO.deleteHMCListById(listId)
         }
     }
 
