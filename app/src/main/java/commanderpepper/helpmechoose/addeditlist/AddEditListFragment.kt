@@ -10,7 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProviders
 import commanderpepper.helpmechoose.R
+import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.data.model.HMCLists
 import java.util.*
 
@@ -20,6 +22,8 @@ class AddEditListFragment : Fragment(), AddEditListContract.View {
 
     lateinit var title: TextView
     lateinit var list: EditText
+
+    private lateinit var addEditListViewModel: AddEditListViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.add_edit_list_fragment, container, false)
@@ -31,6 +35,12 @@ class AddEditListFragment : Fragment(), AddEditListContract.View {
             setImageResource(R.drawable.ic_save)
             setOnClickListener { addHMCList(title.text.toString(), list.text.toString()) }
         }
+
+        val dataSource = HMCListDatabase.getInstance(context!!).hmcDao()
+
+        val addEditListViewModelFactory = AddEditListViewModelFactory(dataSource)
+
+        addEditListViewModel = ViewModelProviders.of(this, addEditListViewModelFactory).get(AddEditListViewModel::class.java)
 
         return root
     }
@@ -56,9 +66,15 @@ class AddEditListFragment : Fragment(), AddEditListContract.View {
 
     // Send the info to the presenter to save a list
     private fun addHMCList(name: String, list: String) {
-        val uuid = UUID.randomUUID().toString()
-        val hmcList = HMCLists(uuid, name)
-        presenter.saveListToDatabase(hmcList, list, uuid)
+        if (name.isNotEmpty() && list.isNotBlank()) {
+            val uuid = UUID.randomUUID().toString()
+            val hmcList = HMCLists(uuid, name)
+            addEditListViewModel.saveListToDatabase(hmcList, list, uuid)
+            showHMCLists()
+        } else {
+            showSnackBar()
+        }
+//        presenter.saveListToDatabase(hmcList, list, uuid)
     }
 
 

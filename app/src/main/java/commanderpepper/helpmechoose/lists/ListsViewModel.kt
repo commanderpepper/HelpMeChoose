@@ -17,7 +17,7 @@ class ListsViewModel(val hmcListDAO: HMCListDAO,
         CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     val hmclist: Flow<List<HMCLists>> = hmcListDAO.getFlowHMCLists().flowOn(Dispatchers.IO)
-    
+
     fun deleteList(listId: String) {
         launch(Dispatchers.IO) {
             hmcListDAO.deleteHMCListById(listId)
