@@ -20,9 +20,13 @@ class ListsDetailsActivity : AppCompatActivity() {
         val taskId = intent.getStringExtra(EXTRA_LIST_ID)
         Log.i("Humza", "$taskId")
 
+        val bundle = Bundle()
+        bundle.putString("id", taskId)
+
         //Set up the fragment
         val fragment: ListDetailsFragment = supportFragmentManager.findFragmentById(R.id.contentFrameListDetail)
                 as ListDetailsFragment? ?: ListDetailsFragment.newInstance().also {
+            it.arguments = bundle
             replaceFragmentInActivity(it, R.id.contentFrameListDetail)
         }
 
