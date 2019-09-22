@@ -1,49 +1,20 @@
 package commanderpepper.helpmechoose.listsdetails
 
 import android.util.Log
-import commanderpepper.helpmechoose.data.HMCListLocalDataSource
+import androidx.lifecycle.ViewModel
+import commanderpepper.helpmechoose.data.Room.HMCListDAO
 import commanderpepper.helpmechoose.data.model.HMCListsValues
 import kotlinx.coroutines.*
 
-class ListsDetailsPresenter(
-        private val listId: String,
-        val detailView: ListsDetailsContract.View,
-        val hmcListLocalDataSource: HMCListLocalDataSource
-) : ListsDetailsContract.Presenter, CoroutineScope by CoroutineScope(Dispatchers.Main) {
+class ListsDetailsViewModel(val hmcListDAO: HMCListDAO) : ViewModel(),
+        CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
-    // Sets this presenter as the instance of the presenter in the view
-    init {
-        detailView.presenter = this
-    }
-
-    override fun start() {
-        loadList()
-    }
-
-    // Retrieve a list that is sorted and gives that list to the fragment
-    override fun loadList() {
-        Log.i("Lists Details Presenter", "Inside load list")
-        launch(Dispatchers.IO) {
-            val list = async { hmcListLocalDataSource.getHMCListsValues(listId) }.await()
-            val matrix = async { makeMapFromHMCValues(list) }.await()
-            val sortedList = async { makeSortedListFromMatrix(matrix) }.await()
-            Log.i("Humza", "$list")
-            Log.i("Humza", "$matrix")
-            Log.i("Humza", "$sortedList")
-            withContext(Dispatchers.Main){
-                detailView.showList(sortedList)
-            }
-        }
-    }
-
-    override fun openSortList() {
-        Log.i("Humza", "Work in Progress")
-        detailView.showSortLst(listId)
-    }
-
-    // Unused for now
-    override fun openEditList() {
-        Log.i("Humza", "Work in Progress")
+    suspend fun loadList(listId: String) : List<String> {
+        return async {
+            val list = withContext(Dispatchers.IO) { hmcListDAO.getHMCListsValues(listId) }
+            val matrix = withContext(Dispatchers.Default) { makeMapFromHMCValues(list) }
+            return@async withContext(Dispatchers.Default) { makeSortedListFromMatrix(matrix) }
+        }.await()
     }
 
     /**
@@ -80,5 +51,10 @@ class ListsDetailsPresenter(
                 .sortedByDescending { (key, value) -> value }.forEach { sortedList.add(it.first) }
 
         return sortedList.toList()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        cancel()
     }
 }

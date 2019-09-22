@@ -12,41 +12,66 @@ import android.widget.BaseAdapter
 import android.widget.LinearLayout
 import android.widget.ListView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProviders
 import commanderpepper.helpmechoose.R
+import commanderpepper.helpmechoose.addeditlist.AddEditListViewModel
+import commanderpepper.helpmechoose.addeditlist.AddEditListViewModelFactory
+import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.data.model.HMCListsValues
+import commanderpepper.helpmechoose.lists.ListsViewModelFactory
 import commanderpepper.helpmechoose.sortlist.SortListActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
-class ListDetailsFragment : Fragment(), ListsDetailsContract.View {
+class ListDetailsFragment : Fragment(), ListsDetailsContract.View,
+        CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     private lateinit var listsView: ListView
     override lateinit var presenter: ListsDetailsContract.Presenter
 
-    private val stringAdapter : StringAdapter = StringAdapter(ArrayList(0))
+    private lateinit var listId: String
+
+    private lateinit var listsDetailsViewModel: ListsDetailsViewModel
+
+    private val stringAdapter: StringAdapter = StringAdapter(ArrayList(0))
 
     override fun onResume() {
         super.onResume()
-        presenter.start()
+        launch {
+            showList(listsDetailsViewModel.loadList(listId))
+        }
+//        presenter.start()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        listId = arguments!!.getString("id")
+
         val root = inflater.inflate(R.layout.lists_details_fragment, container, false)
 
-        with (root){
+        with(root) {
             listsView = this.findViewById(R.id.list_sorted)
             listsView.apply {
-                    adapter = stringAdapter
+                adapter = stringAdapter
             }
         }
 
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_edit_list).apply {
             setImageResource(R.drawable.ic_edit)
-            setOnClickListener { presenter.openEditList() }
+            setOnClickListener { Log.d("Unused", "yeah") }
         }.hide()
 
         requireActivity().findViewById<FloatingActionButton>(R.id.fab_sort_list).apply {
             setImageResource(R.drawable.ic_sort)
-            setOnClickListener { presenter.openSortList() }
+            setOnClickListener { showSortLst(listId) }
         }
+
+        val dataSource = HMCListDatabase.getInstance(context!!).hmcDao()
+
+        val listsDetailsViewModelFactory = ListsDetailsViewModelFactory(dataSource)
+
+        listsDetailsViewModel = ViewModelProviders.of(this, listsDetailsViewModelFactory).get(ListsDetailsViewModel::class.java)
 
         return root
     }
@@ -67,7 +92,7 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View {
         startActivity(intent)
     }
 
-    private class StringAdapter(listOfString: List<String>): BaseAdapter() {
+    private class StringAdapter(listOfString: List<String>) : BaseAdapter() {
 
         var list: List<String> = listOfString
             set(list) {
@@ -90,9 +115,9 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View {
 
         override fun getItem(position: Int) = list[position]
 
-        override fun getItemId(position: Int)= position.toLong()
+        override fun getItemId(position: Int) = position.toLong()
 
-        override fun getCount() =  list.size
+        override fun getCount() = list.size
 
     }
 
