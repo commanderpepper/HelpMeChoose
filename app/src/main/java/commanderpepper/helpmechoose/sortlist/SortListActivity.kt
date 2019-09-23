@@ -20,8 +20,12 @@ class SortListActivity : AppCompatActivity() {
         val taskId = intent.getStringExtra("taskId")
         Log.i("Humza", "$taskId")
 
+        val bundle = Bundle()
+        bundle.putString("id", taskId)
+
         val sortListFragment: SortListFragment = supportFragmentManager.findFragmentById(R.id.contentFrameSortList)
                 as SortListFragment? ?: SortListFragment.newInstance().also {
+            it.arguments = bundle
             replaceFragmentInActivity(it, R.id.contentFrameSortList)
         }
 
