@@ -14,11 +14,8 @@ import commanderpepper.helpmechoose.R
 import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.listsdetails.ListsDetailsViewModel
 import commanderpepper.helpmechoose.listsdetails.ListsDetailsViewModelFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ObsoleteCoroutinesApi
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 class SortListFragment :
         Fragment(),
@@ -33,14 +30,6 @@ class SortListFragment :
     private lateinit var listId: String
 
     private lateinit var sortListViewModel: SortListViewModel
-
-    private var state = false
-
-
-    override fun onResume() {
-        super.onResume()
-//        presenter.start()
-    }
 
     // Sets up the root so the buttons views can be created and set their behavior
     @ObsoleteCoroutinesApi
@@ -60,45 +49,54 @@ class SortListFragment :
             optionB = findViewById(R.id.optionB)
             neither = findViewById(R.id.neitherOption)
 
-            launch {
-                sortListViewModel.optionA.collect {
-                    optionA.text = it
-                }
-                sortListViewModel.optionB.collect {
-                    optionB.text = it
-                }
-            }
-
             optionA.setOnClickListener {
                 sortListViewModel.saveResult(">")
-//                giveResult(">")
-                checkState()
+                checkAndSetText()
             }
 
             optionB.setOnClickListener {
                 sortListViewModel.saveResult("<")
-//                giveResult("<")
-                checkState()
+                checkAndSetText()
             }
 
             neither.setOnClickListener {
                 sortListViewModel.saveResult("=")
-//                giveResult("=")
-                checkState()
+                checkAndSetText()
             }
         }
+
+        setText()
+
         return root
     }
 
+    private fun SortListFragment.checkAndSetText() {
+        checkState()
+        setText()
+    }
+
     @ObsoleteCoroutinesApi
-    fun checkState(){
-        launch(Dispatchers.Default){
+    fun checkState() {
+        launch(Dispatchers.Default) {
             sortListViewModel.listStateFlow.collect {
                 Log.i("Humza", "State: $it")
-                if(!it){
+                if (!it) {
                     Log.i("Humza", "We should be finished")
-                    showListDetail()
+                    withContext(Dispatchers.Main) {
+                        showListDetail()
+                    }
                 }
+            }
+        }
+    }
+
+    fun setText() {
+        launch {
+            sortListViewModel.optionA.collect {
+                optionA.text = it
+            }
+            sortListViewModel.optionB.collect {
+                optionB.text = it
             }
         }
     }
@@ -116,8 +114,10 @@ class SortListFragment :
     override fun showListDetail() {
         Log.i("Humza", "Being called?")
         with(activity) {
-            this!!.setResult(Activity.RESULT_OK)
-            finish()
+            if (activity != null) {
+                this!!.setResult(Activity.RESULT_OK)
+                finish()
+            }
         }
     }
 

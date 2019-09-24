@@ -6,11 +6,11 @@ import commanderpepper.helpmechoose.data.Room.HMCListDAO
 import commanderpepper.helpmechoose.data.model.HMCListsValues
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BroadcastChannel
+import kotlinx.coroutines.channels.consume
 import kotlinx.coroutines.channels.consumeEach
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.*
 import java.lang.Exception
+import kotlin.properties.Delegates
 
 class SortListViewModel(val hmcListDAO: HMCListDAO,
                         val listId: String) :
@@ -28,7 +28,7 @@ class SortListViewModel(val hmcListDAO: HMCListDAO,
     private var hasMoreOptions = true
 
     @ExperimentalCoroutinesApi
-    private val intBroadcast = BroadcastChannel<Int>(1).also {
+    private val intBroadcast = BroadcastChannel<Int>(100).also {
         it.offer(counter)
     }
 
@@ -40,7 +40,7 @@ class SortListViewModel(val hmcListDAO: HMCListDAO,
     @ObsoleteCoroutinesApi
     @ExperimentalCoroutinesApi
     val optionA = flow {
-        intBroadcast.consumeEach {
+        counterFlowFun().collect {
             emit(listOfValue[it].key1)
         }
     }.flowOn(Dispatchers.Default)
@@ -51,7 +51,7 @@ class SortListViewModel(val hmcListDAO: HMCListDAO,
     @ObsoleteCoroutinesApi
     @ExperimentalCoroutinesApi
     val optionB = flow {
-        intBroadcast.consumeEach {
+        counterFlowFun().collect {
             emit(listOfValue[it].key2)
         }
     }.flowOn(Dispatchers.Default)
@@ -67,14 +67,15 @@ class SortListViewModel(val hmcListDAO: HMCListDAO,
         }
     }
 
-
     @ExperimentalCoroutinesApi
     fun increaseCounter() {
         launch {
-            counter = counter.plus(1)
-            intBroadcast.offer(counter)
+            counter++
         }
     }
+
+    fun counterFlowFun(): Flow<Int> =
+            flow { emit(counter) }
 
     @ExperimentalCoroutinesApi
     fun setOptionsToFalse() {
@@ -91,18 +92,22 @@ class SortListViewModel(val hmcListDAO: HMCListDAO,
     fun saveResult(result: String) {
         if (counter < listOfValue.size) {
             launch(Dispatchers.IO) {
-                Log.i("Humza", "Counter: $counter")
-                Log.i("Humza", "List Size: ${listOfValue.size}")
-                val value = listOfValue[counter]
-                value.value = result
-                hmcListDAO.insertValue(value)
-                increaseCounter()
+                if (counter < listOfValue.size) {
+                    Log.i("Humza", "Counter: $counter")
+                    Log.i("Humza", "Counter: ${listOfValue[counter]}")
+                    Log.i("Humza", "List Size: ${listOfValue.size}")
+                    val value = listOfValue[counter]
+                    value.value = result
+                    hmcListDAO.insertValue(value)
+                }
             }
+            increaseCounter()
         } else {
             Log.i("Humza", "Option should be false")
             setOptionsToFalse()
         }
     }
+
 
     override fun onCleared() {
         super.onCleared()
