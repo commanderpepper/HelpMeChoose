@@ -2,30 +2,47 @@ package commanderpepper.helpmechoose.sortlist
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProviders
 import commanderpepper.helpmechoose.R
+import commanderpepper.helpmechoose.data.Room.HMCListDatabase
+import commanderpepper.helpmechoose.listsdetails.ListsDetailsViewModel
+import commanderpepper.helpmechoose.listsdetails.ListsDetailsViewModelFactory
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.collect
 
-class SortListFragment : Fragment(), SortListContract.View {
+class SortListFragment :
+        Fragment(),
+        SortListContract.View,
+        CoroutineScope by CoroutineScope(Dispatchers.Main) {
     override lateinit var presenter: SortListContract.Presenter
 
     private lateinit var optionA: TextView
     private lateinit var optionB: TextView
     private lateinit var neither: Button
 
+    private lateinit var listId: String
 
-    override fun onResume() {
-        super.onResume()
-        presenter.start()
-    }
+    private lateinit var sortListViewModel: SortListViewModel
 
     // Sets up the root so the buttons views can be created and set their behavior
+    @ObsoleteCoroutinesApi
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val root = inflater.inflate(R.layout.sort_list_fragment, container, false)
+
+        val dataSource = HMCListDatabase.getInstance(context!!).hmcDao()
+
+        listId = arguments!!.getString("id")
+
+        val sortListsDetailsViewModelFactory = SortListViewModelFactory(listId, dataSource)
+
+        sortListViewModel = ViewModelProviders.of(this, sortListsDetailsViewModelFactory).get(SortListViewModel::class.java)
 
         with(root) {
             optionA = findViewById(R.id.optionA)
@@ -33,18 +50,55 @@ class SortListFragment : Fragment(), SortListContract.View {
             neither = findViewById(R.id.neitherOption)
 
             optionA.setOnClickListener {
-                giveResult(">")
+                sortListViewModel.saveResult(">")
+                checkAndSetText()
             }
 
             optionB.setOnClickListener {
-                giveResult("<")
+                sortListViewModel.saveResult("<")
+                checkAndSetText()
             }
 
             neither.setOnClickListener {
-                giveResult("=")
+                sortListViewModel.saveResult("=")
+                checkAndSetText()
             }
         }
+
+        setText()
+
         return root
+    }
+
+    private fun SortListFragment.checkAndSetText() {
+        checkState()
+        setText()
+    }
+
+    @ObsoleteCoroutinesApi
+    fun checkState() {
+        launch(Dispatchers.Default) {
+            sortListViewModel.listStateFlow.collect {
+                Log.i("Humza", "State: $it")
+                if (!it) {
+                    Log.i("Humza", "We should be finished")
+                    withContext(Dispatchers.Main) {
+                        showListDetail()
+                    }
+                }
+            }
+        }
+    }
+
+    fun setText() {
+        launch {
+            sortListViewModel.optionA.collect {
+                optionA.text = it
+            }
+            sortListViewModel.optionB.collect {
+                optionB.text = it
+            }
+        }
     }
 
     override fun showOptions(AOption: String, BOption: String) {
@@ -58,9 +112,12 @@ class SortListFragment : Fragment(), SortListContract.View {
 
     // Go back to the detail list view
     override fun showListDetail() {
+        Log.i("Humza", "Being called?")
         with(activity) {
-            this!!.setResult(Activity.RESULT_OK)
-            finish()
+            if (activity != null) {
+                this!!.setResult(Activity.RESULT_OK)
+                finish()
+            }
         }
     }
 
