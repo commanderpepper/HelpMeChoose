@@ -24,11 +24,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class ListDetailsFragment : Fragment(), ListsDetailsContract.View,
+class ListDetailsFragment : Fragment(),
         CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     private lateinit var listsView: ListView
-    override lateinit var presenter: ListsDetailsContract.Presenter
 
     private lateinit var listId: String
 
@@ -39,10 +38,8 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View,
     override fun onResume() {
         super.onResume()
         launch {
-//            showList(listsDetailsViewModel.loadList(listId))
             loadList(listsDetailsViewModel.loadListWithScore(listId))
         }
-//        presenter.start()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -77,20 +74,11 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View,
         return root
     }
 
-    override fun showList(list: List<String>) {
-//        stringAdapter.list = list
-    }
-
     fun loadList(list: List<Pair<String, Int>>) {
         listAdapter.list = list
     }
 
-    // Unused for now
-    override fun showAddEditList(listId: String) {
-        Log.i("Humza", "Filler")
-    }
-
-    override fun showSortLst(listId: String) {
+    fun showSortLst(listId: String) {
         Log.i("Humza", "Filler")
         val intent = Intent(context, SortListActivity::class.java)
         intent.putExtra("taskId", listId)

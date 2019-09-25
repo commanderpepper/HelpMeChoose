@@ -1,18 +1,16 @@
 package commanderpepper.helpmechoose.lists
 
 import android.app.AlertDialog
-import androidx.lifecycle.ViewModelProvider
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import androidx.fragment.app.Fragment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import commanderpepper.helpmechoose.R
 import commanderpepper.helpmechoose.addeditlist.AddEditListActivity
 import commanderpepper.helpmechoose.data.Room.HMCListDatabase
@@ -23,9 +21,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class ListsFragment : Fragment(), ListsContract.View, CoroutineScope by CoroutineScope(Dispatchers.Main) {
-
-    override lateinit var presenter: ListsContract.Presenter
+class ListsFragment : Fragment(), CoroutineScope by CoroutineScope(Dispatchers.Main) {
 
     private lateinit var listsView: LinearLayout
     private lateinit var noListsMessageView: LinearLayout
@@ -91,7 +87,7 @@ class ListsFragment : Fragment(), ListsContract.View, CoroutineScope by Coroutin
     }
 
     // If the list is empty, if the user hasn't made a list then it asks
-    override fun showLists(lists: List<HMCLists>) {
+    fun showLists(lists: List<HMCLists>) {
         Log.i("ListsViewModel", lists.toString())
         if (lists.isEmpty()) {
             showNoList()
@@ -103,12 +99,12 @@ class ListsFragment : Fragment(), ListsContract.View, CoroutineScope by Coroutin
     }
 
     // Makes an intent and goes to the activity to make a list
-    override fun showAddList() {
+    fun showAddList() {
         val intent = Intent(context, AddEditListActivity::class.java)
         startActivity(intent)
     }
 
-    override fun showNoList() {
+    fun showNoList() {
         listsView.visibility = View.GONE
         noListsMessageView.visibility = View.VISIBLE
     }
@@ -116,7 +112,7 @@ class ListsFragment : Fragment(), ListsContract.View, CoroutineScope by Coroutin
     /**
      * Goes to a list
      */
-    override fun showListDetailsUi(listId: String) {
+    fun showListDetailsUi(listId: String) {
         val intent = Intent(context, ListsDetailsActivity::class.java).apply {
             putExtra(ListsDetailsActivity.EXTRA_LIST_ID, listId)
         }

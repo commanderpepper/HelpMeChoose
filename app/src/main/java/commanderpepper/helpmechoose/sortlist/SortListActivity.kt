@@ -10,8 +10,6 @@ import commanderpepper.helpmechoose.util.replaceFragmentInActivity
 
 class SortListActivity : AppCompatActivity() {
 
-    private lateinit var sortListPresenter: SortListPresenter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.sort_list_activity)
@@ -28,13 +26,5 @@ class SortListActivity : AppCompatActivity() {
             it.arguments = bundle
             replaceFragmentInActivity(it, R.id.contentFrameSortList)
         }
-
-        // Set up the database
-        val database = HMCListDatabase
-
-        // Set up the HMC Lists Repository
-        val hmcListLocalDataSource = HMCListLocalDataSource.getInstance(database.getInstance(this.applicationContext).hmcDao())
-
-        sortListPresenter = SortListPresenter(taskId, sortListFragment, hmcListLocalDataSource)
     }
 }

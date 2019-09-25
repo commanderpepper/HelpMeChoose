@@ -16,9 +16,7 @@ import commanderpepper.helpmechoose.data.Room.HMCListDatabase
 import commanderpepper.helpmechoose.data.model.HMCLists
 import java.util.*
 
-class AddEditListFragment : Fragment(), AddEditListContract.View {
-
-    override lateinit var presenter: AddEditListContract.Presenter
+class AddEditListFragment : Fragment() {
 
     lateinit var title: TextView
     lateinit var list: EditText
@@ -45,13 +43,8 @@ class AddEditListFragment : Fragment(), AddEditListContract.View {
         return root
     }
 
-    // Not being used
-    override fun showListAddition() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     // Return to the previous activity
-    override fun showHMCLists() {
+    fun showHMCLists() {
         with(activity) {
             this!!.setResult(Activity.RESULT_OK)
             finish()
@@ -59,7 +52,7 @@ class AddEditListFragment : Fragment(), AddEditListContract.View {
     }
 
     // Show a snack bar if the list or title is blank
-    override fun showSnackBar() {
+    fun showSnackBar() {
         Snackbar.make(this!!.view!!, "Your title is empty or your list isn't large enough", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
     }
@@ -74,9 +67,7 @@ class AddEditListFragment : Fragment(), AddEditListContract.View {
         } else {
             showSnackBar()
         }
-//        presenter.saveListToDatabase(hmcList, list, uuid)
     }
-
 
     companion object {
         fun newInstance() = AddEditListFragment()
