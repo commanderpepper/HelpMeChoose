@@ -33,13 +33,14 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View,
     private lateinit var listId: String
 
     private lateinit var listsDetailsViewModel: ListsDetailsViewModel
-
-    private val stringAdapter: StringAdapter = StringAdapter(ArrayList(0))
+    
+    private val listAdapter : ListAdapter = ListAdapter(ArrayList(0))
 
     override fun onResume() {
         super.onResume()
         launch {
-            showList(listsDetailsViewModel.loadList(listId))
+//            showList(listsDetailsViewModel.loadList(listId))
+            loadList(listsDetailsViewModel.loadListWithScore(listId))
         }
 //        presenter.start()
     }
@@ -53,7 +54,7 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View,
         with(root) {
             listsView = this.findViewById(R.id.list_sorted)
             listsView.apply {
-                adapter = stringAdapter
+                adapter = listAdapter
             }
         }
 
@@ -77,7 +78,11 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View,
     }
 
     override fun showList(list: List<String>) {
-        stringAdapter.list = list
+//        stringAdapter.list = list
+    }
+
+    fun loadList(list: List<Pair<String, Int>>) {
+        listAdapter.list = list
     }
 
     // Unused for now
@@ -92,22 +97,25 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View,
         startActivity(intent)
     }
 
-    private class StringAdapter(listOfString: List<String>) : BaseAdapter() {
-
-        var list: List<String> = listOfString
+    private class ListAdapter(listOfString: List<Pair<String, Int>>) : BaseAdapter(){
+        var list: List<Pair<String, Int>> = listOfString
             set(list) {
                 field = list
                 notifyDataSetChanged()
             }
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            val string = getItem(position)
+            val item = getItem(position)
 
             val rowView = convertView ?: LayoutInflater.from(parent?.context)
-                    .inflate(R.layout.value_item, parent, false)
+                    .inflate(R.layout.value_item_with_score, parent, false)
 
-            with(rowView.findViewById<TextView>(R.id.valueText)) {
-                text = string
+            with(rowView.findViewById<TextView>(R.id.valueScoreText)) {
+                text = item.first
+            }
+
+            with(rowView.findViewById<TextView>(R.id.valueScore)) {
+                text = item.second.toString()
             }
 
             return rowView
@@ -118,7 +126,6 @@ class ListDetailsFragment : Fragment(), ListsDetailsContract.View,
         override fun getItemId(position: Int) = position.toLong()
 
         override fun getCount() = list.size
-
     }
 
     companion object {
