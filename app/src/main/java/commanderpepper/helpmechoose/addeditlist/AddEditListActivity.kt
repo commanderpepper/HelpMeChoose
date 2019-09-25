@@ -9,8 +9,6 @@ import commanderpepper.helpmechoose.util.replaceFragmentInActivity
 
 class AddEditListActivity : AppCompatActivity() {
 
-    private lateinit var addEditPresenter: AddEditListPresenter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.add_edit_list_activity)
@@ -19,13 +17,5 @@ class AddEditListActivity : AppCompatActivity() {
                 as AddEditListFragment? ?: AddEditListFragment.newInstance().also {
             replaceFragmentInActivity(it, R.id.contentFrameAddEdit)
         }
-
-        // Set up the database
-        val database = HMCListDatabase
-
-        // Sets up the local data source
-        val dataSource = HMCListLocalDataSource.getInstance(database.getInstance(this.applicationContext).hmcDao())
-
-        addEditPresenter = AddEditListPresenter(addEditFragment, dataSource)
     }
 }

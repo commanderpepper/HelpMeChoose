@@ -42,8 +42,7 @@ class AddEditListViewModel(val hmcListDAO: HMCListDAO) : ViewModel(),
             }
         }.toList()
     }
-
-
+    
     override fun onCleared() {
         super.onCleared()
         cancel()

@@ -10,8 +10,6 @@ import commanderpepper.helpmechoose.util.replaceFragmentInActivity
 
 class ListsDetailsActivity : AppCompatActivity() {
 
-    private lateinit var listsDetailsPresenter: ListsDetailsPresenter
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.lists_details_activity)
@@ -29,14 +27,6 @@ class ListsDetailsActivity : AppCompatActivity() {
             it.arguments = bundle
             replaceFragmentInActivity(it, R.id.contentFrameListDetail)
         }
-
-        // Set up the database
-        val database = HMCListDatabase
-
-        // Set up the HMC Lists Repository
-        val hmcListLocalDataSource = HMCListLocalDataSource.getInstance(database.getInstance(this.applicationContext).hmcDao())
-
-        listsDetailsPresenter = ListsDetailsPresenter(listId = taskId, detailView = fragment, hmcListLocalDataSource = hmcListLocalDataSource)
     }
 
     companion object {

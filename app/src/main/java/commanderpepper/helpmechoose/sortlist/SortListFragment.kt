@@ -19,9 +19,7 @@ import kotlinx.coroutines.flow.collect
 
 class SortListFragment :
         Fragment(),
-        SortListContract.View,
         CoroutineScope by CoroutineScope(Dispatchers.Main) {
-    override lateinit var presenter: SortListContract.Presenter
 
     private lateinit var optionA: TextView
     private lateinit var optionB: TextView
@@ -101,17 +99,8 @@ class SortListFragment :
         }
     }
 
-    override fun showOptions(AOption: String, BOption: String) {
-        optionA.text = AOption
-        optionB.text = BOption
-    }
-
-    override fun giveResult(result: String) {
-        presenter.saveResult(result)
-    }
-
     // Go back to the detail list view
-    override fun showListDetail() {
+    fun showListDetail() {
         Log.i("Humza", "Being called?")
         with(activity) {
             if (activity != null) {
