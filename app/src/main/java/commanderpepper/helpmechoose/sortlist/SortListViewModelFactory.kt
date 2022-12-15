@@ -8,7 +8,7 @@ import java.lang.IllegalArgumentException
 
 class SortListViewModelFactory(private val id: String, private val datasource: HMCListDAO) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(SortListViewModel::class.java)) {
             return SortListViewModel(datasource, id) as T
         }

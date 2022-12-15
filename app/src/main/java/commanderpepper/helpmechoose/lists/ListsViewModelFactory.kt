@@ -9,7 +9,7 @@ import java.lang.IllegalArgumentException
 class ListsViewModelFactory(private val datasource: HMCListDAO,
                             private val application: Application) : ViewModelProvider.Factory {
     @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(ListsViewModel::class.java)) {
             return ListsViewModel(datasource, application) as T
         }
