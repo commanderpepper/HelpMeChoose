@@ -29,12 +29,12 @@ class SortListViewModel(val hmcListDAO: HMCListDAO,
 
     @ExperimentalCoroutinesApi
     private val intBroadcast = BroadcastChannel<Int>(100).also {
-        it.offer(counter)
+        it.trySend(counter).isSuccess
     }
 
     @ExperimentalCoroutinesApi
     private val listState = BroadcastChannel<Boolean>(1).also {
-        it.offer(hasMoreOptions)
+        it.trySend(hasMoreOptions).isSuccess
     }
 
     @ObsoleteCoroutinesApi
@@ -81,7 +81,7 @@ class SortListViewModel(val hmcListDAO: HMCListDAO,
     fun setOptionsToFalse() {
         launch {
             hasMoreOptions = false
-            listState.offer(hasMoreOptions)
+            listState.trySend(hasMoreOptions).isSuccess
         }
     }
 

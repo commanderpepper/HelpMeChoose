@@ -36,7 +36,7 @@ class SortListFragment :
 
         val dataSource = HMCListDatabase.getInstance(context!!).hmcDao()
 
-        listId = arguments!!.getString("id")
+        listId = arguments!!.getString("id")!!
 
         val sortListsDetailsViewModelFactory = SortListViewModelFactory(listId, dataSource)
 

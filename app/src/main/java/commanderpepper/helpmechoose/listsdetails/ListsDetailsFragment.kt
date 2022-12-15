@@ -44,7 +44,7 @@ class ListDetailsFragment : Fragment(),
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        listId = arguments!!.getString("id")
+        listId = arguments!!.getString("id")!!
 
         val root = inflater.inflate(R.layout.lists_details_fragment, container, false)
 
