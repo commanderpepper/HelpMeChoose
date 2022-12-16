@@ -32,16 +32,20 @@ android {
 
 dependencies {
 
-//    implementation 'androidx.core:core-ktx:1.7.0'
-//    implementation 'androidx.appcompat:appcompat:1.5.1'
-//    implementation 'com.google.android.material:material:1.7.0'
-//    testImplementation 'junit:junit:4.13.2'
-//    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
-
     // Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
-//    implementation "androidx.room:room-runtime:$room_version"
-//    kapt "androidx.room:room-compiler:$room_version"
-//    annotationProcessor "androidx.room:room-compiler:$room_version"
+
+    // Test libraries
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "androidx.room:room-testing:$room_version"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+
+    // Android Test libraries
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_version"
+    androidTestImplementation 'androidx.test:runner:1.5.1'
+
+    // Turbine for Flow testing
+    testImplementation "app.cash.turbine:turbine:$turbine_version"
+    androidTestImplementation "app.cash.turbine:turbine:$turbine_version"
 }
