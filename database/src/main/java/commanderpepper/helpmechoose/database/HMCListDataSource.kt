@@ -2,9 +2,10 @@ package commanderpepper.helpmechoose.database
 
 import commanderpepper.helpmechoose.database.model.HMCLists
 import commanderpepper.helpmechoose.database.model.HMCListsValues
+import kotlinx.coroutines.flow.Flow
 
 interface HMCListDataSource {
-    suspend fun getHMCLists(): List<HMCLists>
+    suspend fun getHMCLists(): Flow<List<HMCLists>>
 
     suspend fun saveHMCList(hmcList: HMCLists)
 
@@ -12,9 +13,9 @@ interface HMCListDataSource {
 
     suspend fun getHMCList(id: String): HMCLists
 
-    suspend fun insertValue(hmclistsvalues: HMCListsValues)
+    suspend fun insertValue(hmcListsValues: HMCListsValues)
 
-    suspend fun getHMCListsValues(id : String): List<HMCListsValues>
+    suspend fun getHMCListsValues(id : String): Flow<List<HMCListsValues>>
 
-    suspend fun getListOfValues(id: String): List<String>
+    suspend fun getListOfValues(id: String): Flow<List<String>>
 }

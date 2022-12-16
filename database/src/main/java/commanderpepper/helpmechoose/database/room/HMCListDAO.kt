@@ -18,7 +18,7 @@ interface HMCListDAO {
      * @return all HMC lists
      */
     @Query("SELECT * FROM HMCListNames")
-    fun getHMCLists(): List<HMCLists>
+    fun getHMCLists(): Flow<List<HMCLists>>
 
     /**
      * Retrieve a single HMC Lists object using the id
@@ -26,7 +26,7 @@ interface HMCListDAO {
      * @return return a single HMC Lists object
      */
     @Query("SELECT * FROM HMCListNames WHERE hmclistid = :id")
-    fun getHMCListById(id: String): HMCLists?
+    fun getHMCListById(id: String): Flow<HMCLists?>
 
     /**
      * Insert a HMC List into HMC List Names
@@ -52,19 +52,19 @@ interface HMCListDAO {
      * Retrieve all HMC Lists Value pairs that match the id given
      */
     @Query("SELECT * FROM HMCListsValues WHERE listid = :id")
-    fun getHMCListsValues(id: String): List<HMCListsValues>
+    fun getHMCListsValues(id: String): Flow<List<HMCListsValues>>
 
     /**
      * Retrieve a list of items for key 1
      */
     @Query("SELECT key1 FROM HMCListsValues WHERE listid = :id")
-    fun getListOfKey1(id: String): List<String>
+    fun getListOfKey1(id: String): Flow<List<String>>
 
     /**
      * Retrieve a list of items for key 2
      */
     @Query("SELECT key2 FROM HMCListsValues WHERE listid = :id")
-    fun getListOfKey2(id: String): List<String>
+    fun getListOfKey2(id: String): Flow<List<String>>
 
     /**
      * Everything below this query will be used for the ViewModel + Flow stuff
