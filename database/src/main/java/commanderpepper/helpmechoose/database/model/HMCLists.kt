@@ -14,8 +14,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "HMCListNames")
 data class HMCLists(
-    @PrimaryKey @ColumnInfo(name = "hmclistid") var id: String = "",
-    @ColumnInfo(name = "name") var name: String = "") {
+    @PrimaryKey @ColumnInfo(name = "hmclistid") val id: String = "",
+    @ColumnInfo(name = "name") val name: String = "") {
 
     /**
      * Probably will not be used

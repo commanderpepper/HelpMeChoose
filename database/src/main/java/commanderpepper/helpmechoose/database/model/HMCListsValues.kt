@@ -21,7 +21,7 @@ import androidx.room.ForeignKey
         parentColumns = arrayOf("hmclistid"),
         childColumns = arrayOf("listid"),
         onDelete = ForeignKey.CASCADE)))
-data class HMCListsValues(@ColumnInfo(name = "listid") var id: String = "",
-                          @ColumnInfo(name = "key1") var key1: String = "",
-                          @ColumnInfo(name = "key2") var key2: String = "",
-                          @ColumnInfo(name = "value") var value: String = "")
+data class HMCListsValues(@ColumnInfo(name = "listid") val id: String = "",
+                          @ColumnInfo(name = "key1") val key1: String = "",
+                          @ColumnInfo(name = "key2") val key2: String = "",
+                          @ColumnInfo(name = "value") val value: String = "")
