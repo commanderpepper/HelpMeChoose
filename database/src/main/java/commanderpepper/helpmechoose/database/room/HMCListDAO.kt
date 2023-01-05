@@ -13,7 +13,6 @@ interface HMCListDAO {
 
     /**
      * Select all HMC Lists from the HMC Lists Names table
-     * Used on the
      *
      * @return all HMC lists
      */
@@ -65,14 +64,4 @@ interface HMCListDAO {
      */
     @Query("SELECT key2 FROM HMCListsValues WHERE listid = :id")
     fun getListOfKey2(id: String): Flow<List<String>>
-
-    /**
-     * Everything below this query will be used for the ViewModel + Flow stuff
-     */
-
-    /**
-     * Retrieve a list of HMC Lists and wrap inside a flow
-     */
-    @Query("SELECT * FROM HMCListNames")
-    fun getFlowHMCLists() : Flow<List<HMCLists>>
 }
