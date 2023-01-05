@@ -6,6 +6,7 @@ import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import commanderpepper.helpmechoose.database.model.HMCLists
+import commanderpepper.helpmechoose.database.model.HMCListsValues
 import commanderpepper.helpmechoose.database.room.HMCListDAO
 import commanderpepper.helpmechoose.database.room.HMCListDatabase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -35,11 +36,6 @@ class HMCListDAOTest {
     @Throws(IOException::class)
     fun close(){
         hmcListDatabase.close()
-    }
-
-    @Test
-    fun testOne(){
-        Assert.assertEquals(1, 1)
     }
 
     @Test
@@ -89,6 +85,42 @@ class HMCListDAOTest {
             val hmcListsFromDb = awaitItem()
             Assert.assertNotNull(hmcListsFromDb)
             Assert.assertEquals("List One Modified", hmcListsFromDb!!.name)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun makeOneListInsertValuesCheckForValues() = runTest {
+        val hmcListId = "1"
+        val hmcLists = HMCLists(hmcListId, "List One")
+        hmcListDAO.insertList(hmcLists)
+
+        val hmcListValueOne = HMCListsValues(id = hmcListId, key1 = "Key One", key2 = "Key Two", "10")
+        val hmcListValueTwo = HMCListsValues(id = hmcListId, key1 = "Key One Alt", key2 = "Key Two Alt", "1")
+        hmcListDAO.insertValue(hmcListValueOne)
+        hmcListDAO.insertValue(hmcListValueTwo)
+
+        val keyOne = hmcListDAO.getHMCListsValues(hmcListId)
+        keyOne.test {
+            val hmcListValueFromDb = this.awaitItem()
+            Assert.assertTrue(hmcListValueFromDb.isNotEmpty())
+            Assert.assertEquals(2, hmcListValueFromDb.size)
+            cancelAndIgnoreRemainingEvents()
+        }
+    }
+
+    @Test
+    fun makeOneListInsertListDeleteListCheckForNoLists() = runTest {
+        val hmcListId = "1"
+        val hmcLists = HMCLists(hmcListId, "List One")
+        hmcListDAO.insertList(hmcLists)
+
+        hmcListDAO.deleteHMCListById(hmcListId)
+
+        val hmcListsFlow = hmcListDAO.getHMCLists()
+        hmcListsFlow.test {
+            val list = awaitItem()
+            Assert.assertTrue(list.isEmpty())
             cancelAndIgnoreRemainingEvents()
         }
     }
