@@ -3,8 +3,25 @@ kotlin = "1.7.20"
 room = "2.4.3"
 coroutine = "1.6.4"
 turbine = "0.9.0"
+junit = "4.13.2"
 
 [libraries]
+# Room
 room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
+
+# Coroutine
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine" }
+
+# JUnit
+junit-junit = { group = "junit", name = "junit", version.ref = "junit"}
+
+# Android X Test
+androidx-test-junit = { group = "androidx.test.ext", name = "junit" , version = "1.1.4"}
+androidx-test-runner = { group = "androidx.test", name = "runner" , version = "1.5.1"}
+
+# Turbine
+turbine-turbine = { group = "pp.cash.turbine" , name = "turbine", version.ref = "turbine" }

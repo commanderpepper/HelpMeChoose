@@ -32,26 +32,27 @@ android {
 }
 
 dependencies {
+    // Room
+    implementation(libs.room.ktx)
+    implementation(libs.room.runtime)
+    annotationProcessor(libs.room.compiler)
+    kapt(libs.room.compiler)
 
-    // Kotlin Extensions and Coroutines support for Room
-    implementation ("androidx.room:room-ktx:2.4.3")
-    implementation ("androidx.room:room-runtime:2.4.3")
-    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
-    annotationProcessor ("androidx.room:room-compiler:2.4.3")
-    kapt ("androidx.room:room-compiler:2.4.3")
+    // Coroutines
+    implementation(libs.coroutines.core)
 
     // Test libraries
-    testImplementation ("junit:junit:4.13.2")
-    testImplementation ("androidx.room:room-testing:2.4.3")
-    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
+    testImplementation(libs.junit.junit)
+    testImplementation(libs.room.testing)
+    testImplementation(libs.coroutines.test)
 
     // Android Test libraries
-    androidTestImplementation ("androidx.test.ext:junit:1.1.4")
-    androidTestImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
-    androidTestImplementation ("androidx.test:runner:1.5.1")
-    androidTestImplementation ("androidx.room:room-testing:2.4.3")
+    androidTestImplementation(libs.androidx.test.junit)
+    androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.room.testing)
 
     // Turbine for Flow testing
-    testImplementation ("app.cash.turbine:turbine:0.9.0")
-    androidTestImplementation ("app.cash.turbine:turbine:0.9.0")
+    testImplementation (libs.turbine.turbine)
+    androidTestImplementation (libs.turbine.turbine)
 }
