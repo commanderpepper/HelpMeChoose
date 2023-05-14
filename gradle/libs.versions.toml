@@ -1,9 +1,15 @@
 [versions]
+# libraries
 kotlin = "1.7.20"
 room = "2.4.3"
 coroutine = "1.6.4"
 turbine = "0.9.0"
 junit = "4.13.2"
+
+# plugins
+androidLibraryPlugin = "7.3.1"
+kotlinAndroidPlugin = "1.8.21"
+kotlinKaptPlugin = "1.8.21"
 
 [libraries]
 # Room
@@ -25,3 +31,11 @@ androidx-test-runner = { group = "androidx.test", name = "runner" , version = "1
 
 # Turbine
 turbine-turbine = { group = "pp.cash.turbine" , name = "turbine", version.ref = "turbine" }
+
+[plugins]
+# Android
+android-library = { id = "com.android.library" , version.ref = "androidLibraryPlugin"}
+
+# Kotlin
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroidPlugin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt" , version.ref = "kotlinKaptPlugin"}
