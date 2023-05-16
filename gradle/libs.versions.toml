@@ -37,7 +37,7 @@ turbine-turbine = { group = "pp.cash.turbine" , name = "turbine", version.ref = 
 # Android X
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.5.1" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.1.4" }
-androdix-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version = "2.2.0" }
+androidx-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version = "2.2.0" }
 
 # Android UI
 android-material = { group = "com.google.android.material", name = "material", version = "1.7.0" }
