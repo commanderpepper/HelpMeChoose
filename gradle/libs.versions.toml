@@ -21,6 +21,7 @@ room-testing = { group = "androidx.room", name = "room-testing", version.ref = "
 # Coroutine
 coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
 coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine" }
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
 
 # JUnit
 junit-junit = { group = "junit", name = "junit", version.ref = "junit"}
@@ -28,9 +29,18 @@ junit-junit = { group = "junit", name = "junit", version.ref = "junit"}
 # Android X Test
 androidx-test-junit = { group = "androidx.test.ext", name = "junit" , version = "1.1.4"}
 androidx-test-runner = { group = "androidx.test", name = "runner" , version = "1.5.1"}
+androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core" , version = "3.5.0"}
 
 # Turbine
 turbine-turbine = { group = "pp.cash.turbine" , name = "turbine", version.ref = "turbine" }
+
+# Android X
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.5.1" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.1.4" }
+androdix-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version = "2.2.0" }
+
+# Android UI
+android-material = { group = "com.google.android.material", name = "material", version = "1.7.0" }
 
 [plugins]
 # Android
