@@ -21,7 +21,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.7"
+        kotlinCompilerExtensionVersion = "1.3.2"
     }
 
     kotlinOptions {
@@ -41,4 +41,5 @@ dependencies {
     implementation(libs.compose.material3)
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui)
+    implementation(libs.compose.uitooling)
 }

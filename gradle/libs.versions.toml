@@ -6,6 +6,7 @@ coroutine = "1.7.1"
 turbine = "0.9.0"
 junit = "4.13.2"
 compose = "1.4.3"
+material3 = "1.1.0"
 
 # plugins
 androidLibraryPlugin = "7.3.1"
@@ -46,9 +47,11 @@ android-material = { group = "com.google.android.material", name = "material", v
 # Compose
 compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "compose" }
 compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "compose" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
 compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "compose" }
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+compose-uitooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
+
 
 [plugins]
 # Android
