@@ -1,0 +1,62 @@
+[versions]
+# libraries
+kotlin = "1.7.20"
+room = "2.5.1"
+coroutine = "1.7.1"
+turbine = "0.9.0"
+junit = "4.13.2"
+compose = "1.4.3"
+material3 = "1.1.0"
+
+# plugins
+androidLibraryPlugin = "7.3.1"
+kotlinAndroidPlugin = "1.8.21"
+kotlinKaptPlugin = "1.8.21"
+
+[libraries]
+# Room
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-testing = { group = "androidx.room", name = "room-testing", version.ref = "room" }
+
+# Coroutine
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutine" }
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutine" }
+
+# JUnit
+junit-junit = { group = "junit", name = "junit", version.ref = "junit"}
+
+# Android X Test
+androidx-test-junit = { group = "androidx.test.ext", name = "junit" , version = "1.1.5" }
+androidx-test-runner = { group = "androidx.test", name = "runner" , version = "1.5.2" }
+androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core" , version = "3.5.1" }
+
+# Turbine
+turbine-turbine = { group = "pp.cash.turbine" , name = "turbine", version.ref = "turbine" }
+
+# Android X
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.6.1" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version = "2.1.4" }
+androidx-lifecycle-extensions = { group = "androidx.lifecycle", name = "lifecycle-extensions", version = "2.2.0" }
+
+# Android UI
+android-material = { group = "com.google.android.material", name = "material", version = "1.9.0" }
+
+# Compose
+compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "compose" }
+compose-foundation = { group = "androidx.compose.foundation", name = "foundation", version.ref = "compose" }
+compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "material3" }
+compose-runtime = { group = "androidx.compose.runtime", name = "runtime", version.ref = "compose" }
+compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
+compose-uitooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
+
+
+[plugins]
+# Android
+android-library = { id = "com.android.library" , version.ref = "androidLibraryPlugin"}
+
+# Kotlin
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinAndroidPlugin" }
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt" , version.ref = "kotlinKaptPlugin"}
