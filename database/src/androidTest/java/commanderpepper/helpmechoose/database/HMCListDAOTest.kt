@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import app.cash.turbine.test
 import commanderpepper.helpmechoose.database.model.HMCLists
 import commanderpepper.helpmechoose.database.model.HMCListsValues
+import commanderpepper.helpmechoose.database.model.Relation
 import commanderpepper.helpmechoose.database.room.HMCListDAO
 import commanderpepper.helpmechoose.database.room.HMCListDatabase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -19,7 +20,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import java.io.IOException
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class HMCListDAOTest {
     private lateinit var hmcListDAO: HMCListDAO
@@ -95,8 +95,8 @@ class HMCListDAOTest {
         val hmcLists = HMCLists(hmcListId, "List One")
         hmcListDAO.insertList(hmcLists)
 
-        val hmcListValueOne = HMCListsValues(id = hmcListId, key1 = "Key One", key2 = "Key Two", "10")
-        val hmcListValueTwo = HMCListsValues(id = hmcListId, key1 = "Key One Alt", key2 = "Key Two Alt", "1")
+        val hmcListValueOne = HMCListsValues(id = hmcListId, key1 = "Key One", key2 = "Key Two", Relation.GREATER)
+        val hmcListValueTwo = HMCListsValues(id = hmcListId, key1 = "Key One Alt", key2 = "Key Two Alt", Relation.LESS)
         hmcListDAO.insertValue(hmcListValueOne)
         hmcListDAO.insertValue(hmcListValueTwo)
 

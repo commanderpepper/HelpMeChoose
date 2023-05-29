@@ -55,6 +55,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.coroutines.test)
 
     // Turbine for Flow testing
     testImplementation (libs.turbine.turbine)
