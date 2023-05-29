@@ -41,6 +41,10 @@ dependencies {
     // Coroutines
     implementation(libs.coroutines.core)
 
+    // Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+
     // Test libraries
     testImplementation(libs.junit.junit)
     testImplementation(libs.room.testing)
