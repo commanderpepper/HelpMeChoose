@@ -32,6 +32,10 @@ android {
 }
 
 dependencies {
+    // Modules
+    implementation(":uimodel")
+    implementation(project(mapOf("path" to ":uimodel")))
+
     // Room
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
