@@ -35,6 +35,10 @@ android {
 }
 
 dependencies {
+    // Modules
+    implementation(":uimodel")
+    implementation(project(mapOf("path" to ":uimodel")))
+
     // Compose
     implementation(libs.compose.animation)
     implementation(libs.compose.foundation)
@@ -42,4 +46,5 @@ dependencies {
     implementation(libs.compose.runtime)
     implementation(libs.compose.ui)
     implementation(libs.compose.uitooling)
+
 }
