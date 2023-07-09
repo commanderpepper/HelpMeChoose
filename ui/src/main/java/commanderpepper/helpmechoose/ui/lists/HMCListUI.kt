@@ -12,27 +12,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import commanderpepper.helpmechoose.ui.R
+import commanderpepper.helpmechoose.uimodel.HMCItem
 
 
 @Composable
-fun HMCListUI(modifier: Modifier = Modifier, hmcList: List<String>, onHMCClick: () -> Unit, onDeleteClick: () -> Unit){
+fun HMCListUI(modifier: Modifier = Modifier, hmcList: List<HMCItem>, onHMCClick: () -> Unit, onDeleteClick: () -> Unit){
     LazyRow(){
-        hmcList.forEach {
+        hmcList.forEach { hmcItem ->
             item {
-
+                HMCListRowUI(hmcItem = hmcItem, onHMCClick = { /*TODO*/ }) {
+                    
+                }
             }
         }
     }
 }
 
 @Composable
-fun HMCListRowUI(modifier: Modifier = Modifier, hmcItem: String, onHMCClick: () -> Unit, onDeleteClick: () -> Unit){
+fun HMCListRowUI(modifier: Modifier = Modifier, hmcItem: HMCItem, onHMCClick: () -> Unit, onDeleteClick: () -> Unit){
     Row(
         modifier = modifier.clickable { onHMCClick() },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        BasicText(text = hmcItem)
+        BasicText(text = hmcItem.name)
         Image(modifier = Modifier.clickable { onDeleteClick() }, painter = painterResource(id = R.drawable.ic_delete), contentDescription = "Delete HMC List")
     }
 }
@@ -40,5 +43,5 @@ fun HMCListRowUI(modifier: Modifier = Modifier, hmcItem: String, onHMCClick: () 
 @Composable
 @Preview
 fun HMCListRowUIPreview() {
-    HMCListRowUI(hmcItem = "This is a test", onHMCClick = { }, onDeleteClick = { })
+    HMCListRowUI(hmcItem = HMCItem(id = "1", name = "This is a test"), onHMCClick = { }, onDeleteClick = { })
 }

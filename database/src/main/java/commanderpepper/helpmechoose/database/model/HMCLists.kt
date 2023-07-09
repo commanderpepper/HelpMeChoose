@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import commanderpepper.helpmechoose.uimodel.HMCItem
 
 /**
  * Data Class used to retrieve the name, id and list of a HMC List
@@ -122,4 +123,10 @@ data class HMCLists(
 //    }
 }
 
+fun HMCLists.toUIModel(): HMCItem {
+    return HMCItem(
+        id = this.id,
+        name = this.name
+    )
+}
 

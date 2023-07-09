@@ -3,10 +3,13 @@
 kotlin = "1.7.20"
 room = "2.5.1"
 coroutine = "1.7.1"
-turbine = "0.9.0"
+turbine = "0.13.0"
 junit = "4.13.2"
 compose = "1.4.3"
 material3 = "1.1.0"
+koin = "3.4.0"
+koinCompose = "1.0.1"
+koinAndroidxCompose = "3.4.4"
 
 # plugins
 androidLibraryPlugin = "7.3.1"
@@ -34,7 +37,7 @@ androidx-test-runner = { group = "androidx.test", name = "runner" , version = "1
 androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core" , version = "3.5.1" }
 
 # Turbine
-turbine-turbine = { group = "pp.cash.turbine" , name = "turbine", version.ref = "turbine" }
+turbine-turbine = { group = "app.cash.turbine" , name = "turbine", version.ref = "turbine" }
 
 # Android X
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version = "1.6.1" }
@@ -52,6 +55,13 @@ compose-runtime = { group = "androidx.compose.runtime", name = "runtime", versio
 compose-ui = { group = "androidx.compose.ui", name = "ui", version.ref = "compose" }
 compose-uitooling = { group = "androidx.compose.ui", name = "ui-tooling", version.ref = "compose" }
 
+# Koin
+koin-core = { group = "io.insert-koin", name = "koin-core", version.ref = "koin" }
+koin-coroutines = { group = "io.insert-koin", name = "koin-core-coroutines", version.ref = "koin" }
+koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = "koin" }
+koin-android-compat = { group = "io.insert-koin", name = "koin-android-compat", version.ref = "koin" }
+koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koinCompose" }
+koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-composee", version.ref = "koinAndroidxCompose" }
 
 [plugins]
 # Android

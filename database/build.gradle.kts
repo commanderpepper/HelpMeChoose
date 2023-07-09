@@ -32,6 +32,10 @@ android {
 }
 
 dependencies {
+    // Modules
+    implementation(":uimodel")
+    implementation(project(mapOf("path" to ":uimodel")))
+
     // Room
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
@@ -40,6 +44,10 @@ dependencies {
 
     // Coroutines
     implementation(libs.coroutines.core)
+
+    // Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 
     // Test libraries
     testImplementation(libs.junit.junit)
@@ -51,6 +59,7 @@ dependencies {
     androidTestImplementation(libs.androidx.test.runner)
     androidTestImplementation(libs.room.testing)
     androidTestImplementation(libs.room.testing)
+    androidTestImplementation(libs.coroutines.test)
 
     // Turbine for Flow testing
     testImplementation (libs.turbine.turbine)
