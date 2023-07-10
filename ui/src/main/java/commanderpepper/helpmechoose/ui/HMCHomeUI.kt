@@ -9,11 +9,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import commanderpepper.helpmechoose.ui.lists.HMCListUI
+import commanderpepper.helpmechoose.uimodel.HMCItem
 
 @Composable
 fun HMCHomeUI(
     modifier: Modifier = Modifier,
-    hmcList: List<String>,
+    hmcList: List<HMCItem>,
     onHMCClick: () -> Unit,
     onDeleteClick: () -> Unit,
     onAddClick: () -> Unit,

@@ -36,8 +36,7 @@ android {
 
 dependencies {
     // Modules
-    implementation(":uimodel")
-//    implementation(project(mapOf("path" to ":uimodel")))
+    implementation(project(mapOf("path" to ":uimodel")))
 
     // Compose
     implementation(libs.compose.animation)
