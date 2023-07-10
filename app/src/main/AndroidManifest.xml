@@ -9,20 +9,22 @@
         android:roundIcon="@mipmap/ic_launcher_hmc_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".sortlist.SortListActivity" />
+        <activity
+            android:name=".sortlist.SortListActivity" />
         <activity
             android:name=".listsdetails.ListsDetailsActivity"/>
         <activity
-            android:name=".lists.ListsActivity"
+            android:name=".lists.ListsActivity"/>
+        <activity
+            android:name=".addeditlist.AddEditListActivity"/>
+        <activity
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".addeditlist.AddEditListActivity"/>
     </application>
 
 </manifest>

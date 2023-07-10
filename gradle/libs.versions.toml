@@ -10,6 +10,7 @@ material3 = "1.1.0"
 koin = "3.4.0"
 koinCompose = "1.0.1"
 koinAndroidxCompose = "3.4.4"
+navigation="2.6.0"
 
 # plugins
 androidLibraryPlugin = "7.3.1"
@@ -62,6 +63,10 @@ koin-android = { group = "io.insert-koin", name = "koin-android", version.ref = 
 koin-android-compat = { group = "io.insert-koin", name = "koin-android-compat", version.ref = "koin" }
 koin-compose = { group = "io.insert-koin", name = "koin-compose", version.ref = "koinCompose" }
 koin-androidx-compose = { group = "io.insert-koin", name = "koin-androidx-composee", version.ref = "koinAndroidxCompose" }
+
+# Navigation Component
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+navigation-ui = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigation" }
 
 [plugins]
 # Android
