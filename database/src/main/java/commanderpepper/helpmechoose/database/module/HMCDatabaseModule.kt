@@ -7,7 +7,7 @@ import commanderpepper.helpmechoose.database.room.HMCListDatabase
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
-val hmcDatabaseModule = module {
+val HMCDatabaseModule = module {
     single {
         Room.databaseBuilder(
             androidContext(),

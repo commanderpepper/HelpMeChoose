@@ -37,6 +37,7 @@ android {
 dependencies {
     // Modules
     implementation(project(mapOf("path" to ":uimodel")))
+    implementation(project(mapOf("path" to ":database")))
 
     // Koin
     implementation(libs.koin.core)
