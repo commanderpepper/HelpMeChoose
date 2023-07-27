@@ -38,6 +38,12 @@ dependencies {
     // Modules
     implementation(project(mapOf("path" to ":uimodel")))
 
+    // Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
+    implementation(libs.koin.androidx.compose.navigation)
+
     // Compose
     implementation(libs.compose.animation)
     implementation(libs.compose.foundation)
