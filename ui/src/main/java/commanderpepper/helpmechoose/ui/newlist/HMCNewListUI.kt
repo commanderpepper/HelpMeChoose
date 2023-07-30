@@ -50,7 +50,7 @@ fun HMCNewListUI(
         onErrorDismiss = hmcNewListViewModel::dismissClicked,
         onItemRemove = hmcNewListViewModel::removeItem,
         onSuccessfulCreation = {
-            navController.popBackStack()
+            navController.navigateUp()
         }
     )
 }
