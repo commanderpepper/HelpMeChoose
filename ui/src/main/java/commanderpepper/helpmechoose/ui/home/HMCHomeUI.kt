@@ -67,9 +67,9 @@ fun HMCHomeUI(
                 HMCListUI(hmcList = homeUIState.hmcItems, onHMCClick = onHMCClick, onDeleteClick = onDeleteClick)
             }
         }
-        Button(modifier = Modifier
-            .align(alignment = Alignment.BottomEnd)
-            .padding(16.dp), onClick = onAddClick){
+        Button(
+            modifier = Modifier.align(alignment = Alignment.BottomEnd),
+            onClick = onAddClick){
             BasicText(text = "New List")
         }
     }
