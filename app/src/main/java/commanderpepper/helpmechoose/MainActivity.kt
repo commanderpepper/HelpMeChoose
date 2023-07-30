@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import commanderpepper.helpmechoose.ui.home.HMCHomeUI
-import commanderpepper.helpmechoose.ui.newlist.HMCNewListItemUI
+import commanderpepper.helpmechoose.ui.newlist.HMCNewListUI
 
 class MainActivity : AppCompatActivity() {
 
@@ -31,9 +31,7 @@ class MainActivity : AppCompatActivity() {
                     )
                 }
                 composable("newlist") {
-                    HMCNewListItemUI(newItem = "Test") {
-
-                    }
+                    HMCNewListUI(navController = navController)
                 }
                 composable("edit") {
 
