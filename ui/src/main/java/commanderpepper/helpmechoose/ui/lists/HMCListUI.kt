@@ -21,27 +21,44 @@ import commanderpepper.helpmechoose.uimodel.HMCItem
 
 
 @Composable
-fun HMCListUI(modifier: Modifier = Modifier, hmcList: List<HMCItem>, onHMCClick: () -> Unit, onDeleteClick: () -> Unit){
-    LazyColumn(modifier = modifier, verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top)){
-        items(items = hmcList){item ->
+fun HMCListUI(
+    modifier: Modifier = Modifier,
+    hmcList: List<HMCItem>,
+    onHMCClick: (String) -> Unit,
+    onDeleteClick: (String) -> Unit
+) {
+    LazyColumn(
+        modifier = modifier,
+        verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.Top)
+    ) {
+        items(items = hmcList) { item ->
             HMCListRowUI(hmcItem = item, onHMCClick = onHMCClick, onDeleteClick = onDeleteClick)
         }
     }
 }
 
 @Composable
-fun HMCListRowUI(modifier: Modifier = Modifier, hmcItem: HMCItem, onHMCClick: () -> Unit, onDeleteClick: () -> Unit){
+fun HMCListRowUI(
+    modifier: Modifier = Modifier,
+    hmcItem: HMCItem,
+    onHMCClick: (String) -> Unit,
+    onDeleteClick: (String) -> Unit
+) {
     Card {
         Row(
             modifier = modifier
                 .padding(8.dp)
-                .clickable { onHMCClick() }
+                .clickable { onHMCClick(hmcItem.id) }
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             BasicText(text = hmcItem.name)
-            Image(modifier = Modifier.clickable { onDeleteClick() }, painter = painterResource(id = R.drawable.ic_delete), contentDescription = "Delete HMC List")
+            Image(
+                modifier = Modifier.clickable { onDeleteClick(hmcItem.id) },
+                painter = painterResource(id = R.drawable.ic_delete),
+                contentDescription = "Delete HMC List"
+            )
         }
     }
 }
@@ -49,5 +66,8 @@ fun HMCListRowUI(modifier: Modifier = Modifier, hmcItem: HMCItem, onHMCClick: ()
 @Composable
 @Preview
 fun HMCListRowUIPreview() {
-    HMCListRowUI(hmcItem = HMCItem(id = "1", name = "This is a test"), onHMCClick = { }, onDeleteClick = { })
+    HMCListRowUI(
+        hmcItem = HMCItem(id = "1", name = "This is a test"),
+        onHMCClick = { },
+        onDeleteClick = { })
 }

@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import commanderpepper.helpmechoose.ui.home.HMCHomeUI
 import commanderpepper.helpmechoose.ui.newlist.HMCNewListUI
+import commanderpepper.helpmechoose.ui.sort.HMCSortListUI
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,10 +20,10 @@ class MainActivity : AppCompatActivity() {
             NavHost(navController = navController, startDestination = "list") {
                 composable("list") {
                     HMCHomeUI(
-                        onHMCClick = {
-
+                        onHMCClick = { listId ->
+                            navController.navigate("sort/{$listId}")
                         },
-                        onDeleteClick = {
+                        onDeleteClick = { listId ->
 
                         },
                         onAddClick = {
@@ -36,8 +37,9 @@ class MainActivity : AppCompatActivity() {
                 composable("edit") {
 
                 }
-                composable("sort") {
+                composable("sort/{listId}") {
                     //TODO: Add sort Composable
+                    HMCSortListUI()
                 }
             }
         }

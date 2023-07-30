@@ -21,8 +21,8 @@ import org.koin.androidx.compose.koinViewModel
 fun HMCHomeUI(
     modifier: Modifier = Modifier,
     hmcHomeViewModel: HMCHomeViewModel = koinViewModel<HMCHomeViewModel>(),
-    onHMCClick: () -> Unit,
-    onDeleteClick: () -> Unit,
+    onHMCClick: (String) -> Unit,
+    onDeleteClick: (String) -> Unit,
     onAddClick: () -> Unit,
 ){
     val homeUIState = hmcHomeViewModel.hmcItemList.collectAsState()
@@ -39,8 +39,8 @@ fun HMCHomeUI(
 fun HMCHomeUI(
     modifier: Modifier = Modifier,
     homeUIState: HomeUIState,
-    onHMCClick: () -> Unit,
-    onDeleteClick: () -> Unit,
+    onHMCClick: (String) -> Unit,
+    onDeleteClick: (String) -> Unit,
     onAddClick: () -> Unit,
 ) {
     Box(modifier = modifier.fillMaxSize()){
