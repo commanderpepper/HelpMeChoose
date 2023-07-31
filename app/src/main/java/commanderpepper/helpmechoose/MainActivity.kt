@@ -41,8 +41,9 @@ class MainActivity : AppCompatActivity() {
                     })
                 }
                 composable("sort/{listId}") {
-                    //TODO: Add sort Composable
-                    HMCSortListUI()
+                    HMCSortListUI(doneSorting = {
+                        navController.navigateUp()
+                    })
                 }
             }
         }
