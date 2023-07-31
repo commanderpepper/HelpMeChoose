@@ -15,8 +15,8 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.stateIn
 
 class HMCDetailViewModel(
-    private val savedStateHandle: SavedStateHandle,
-    private val hmcListDataSource: HMCListDataSource
+    savedStateHandle: SavedStateHandle,
+    hmcListDataSource: HMCListDataSource
 ) : ViewModel() {
 
     private val listId: String = savedStateHandle["listId"]!!
@@ -55,7 +55,7 @@ class HMCDetailViewModel(
                 }
 
                 Relation.LESS -> {
-                    pointsKeyOne -= -1
+                    pointsKeyOne -= 1
                     pointsKeyTwo += 1
                 }
 
