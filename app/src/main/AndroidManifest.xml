@@ -10,14 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".sortlist.SortListActivity" />
-        <activity
-            android:name=".listsdetails.ListsDetailsActivity"/>
-        <activity
-            android:name=".lists.ListsActivity"/>
-        <activity
-            android:name=".addeditlist.AddEditListActivity"/>
-        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
