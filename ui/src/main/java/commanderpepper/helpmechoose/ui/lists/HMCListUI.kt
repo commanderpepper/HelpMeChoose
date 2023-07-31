@@ -9,8 +9,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -44,6 +49,25 @@ fun HMCListRowUI(
     onHMCClick: (String) -> Unit,
     onDeleteClick: (String) -> Unit
 ) {
+    val alertDialogIsVisible = remember { mutableStateOf(false) }
+    if (alertDialogIsVisible.value) {
+        AlertDialog(
+            onDismissRequest = { alertDialogIsVisible.value = false },
+            confirmButton = {
+                Button(onClick = {
+                    onDeleteClick(hmcItem.id)
+                    alertDialogIsVisible.value = false
+                }) {
+                    BasicText(text = "Delete")
+                }
+            },
+            title = {
+                BasicText(text = "Delete list")
+            },
+            text = {
+                BasicText(text = "Do you really want to delete ${hmcItem.name}?")
+            })
+    }
     Card {
         Row(
             modifier = modifier
@@ -55,7 +79,7 @@ fun HMCListRowUI(
         ) {
             BasicText(text = hmcItem.name)
             Image(
-                modifier = Modifier.clickable { onDeleteClick(hmcItem.id) },
+                modifier = Modifier.clickable { alertDialogIsVisible.value = true },
                 painter = painterResource(id = R.drawable.ic_delete),
                 contentDescription = "Delete HMC List"
             )

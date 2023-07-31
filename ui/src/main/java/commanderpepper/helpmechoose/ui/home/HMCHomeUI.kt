@@ -22,7 +22,6 @@ fun HMCHomeUI(
     modifier: Modifier = Modifier,
     hmcHomeViewModel: HMCHomeViewModel = koinViewModel<HMCHomeViewModel>(),
     onHMCClick: (String) -> Unit,
-    onDeleteClick: (String) -> Unit,
     onAddClick: () -> Unit,
 ){
     val homeUIState = hmcHomeViewModel.hmcItemList.collectAsState()
@@ -30,7 +29,7 @@ fun HMCHomeUI(
         modifier = modifier.padding(16.dp),
         homeUIState = homeUIState.value,
         onHMCClick = onHMCClick,
-        onDeleteClick = onDeleteClick,
+        onDeleteClick = hmcHomeViewModel::deleteList,
         onAddClick = onAddClick
     )
 }

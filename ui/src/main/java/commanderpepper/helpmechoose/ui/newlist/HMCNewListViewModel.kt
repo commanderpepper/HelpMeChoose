@@ -54,6 +54,7 @@ class HMCNewListViewModel(private val hmcListDataSource: HMCListDataSource): Vie
                     _newListUIState.value.name.isEmpty() && _newListUIState.value.name.isEmpty() -> "You've got no name for your list and no items either"
                     _newListUIState.value.name.isEmpty() -> "You've got no name for your list"
                     _newListUIState.value.values.isEmpty() -> "You've got no items in your list"
+                    _newListUIState.value.values.size <= 1 -> "That's hardly a list"
                     else -> "The list is not valid"
                 }
                 _saveToDbState.emit(SaveToDBStates.Error(message = message))
@@ -97,7 +98,7 @@ data class NewListUIState(
 )
 
 fun NewListUIState.isValid(): Boolean {
-    return name.isNotEmpty() && values.isNotEmpty()
+    return name.isNotEmpty() && values.isNotEmpty() && values.size > 1
 }
 
 sealed class SaveToDBStates {

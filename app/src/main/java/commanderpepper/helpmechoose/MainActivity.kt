@@ -24,9 +24,6 @@ class MainActivity : AppCompatActivity() {
                         onHMCClick = { listId ->
                             navController.navigate("detail/$listId")
                         },
-                        onDeleteClick = { listId ->
-
-                        },
                         onAddClick = {
                             navController.navigate(route = "newlist")
                         }
