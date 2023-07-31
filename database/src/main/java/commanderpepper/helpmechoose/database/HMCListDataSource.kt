@@ -11,7 +11,7 @@ interface HMCListDataSource {
 
     suspend fun deleteHMCList(id: String)
 
-    suspend fun getHMCList(id: String): Flow<HMCLists?>
+    fun getHMCList(id: String): Flow<HMCLists?>
 
     suspend fun insertValue(hmcListsValues: HMCListsValues)
 

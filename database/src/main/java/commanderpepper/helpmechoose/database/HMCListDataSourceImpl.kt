@@ -18,7 +18,7 @@ class HMCListDataSourceImpl(private val hmcListDAO: HMCListDAO): HMCListDataSour
         hmcListDAO.deleteHMCListById(id)
     }
 
-    override suspend fun getHMCList(id: String): Flow<HMCLists?> {
+    override fun getHMCList(id: String): Flow<HMCLists?> {
         return hmcListDAO.getHMCListById(id)
     }
 

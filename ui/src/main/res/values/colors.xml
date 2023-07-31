@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--    Trophy Colors-->
+    <color name="gold_trophy">#FFD700</color>
+    <color name="silver_trophy">#C0C0C0</color>
+    <color name="bronze_trophy">#CD7F32</color>
+</resources>
