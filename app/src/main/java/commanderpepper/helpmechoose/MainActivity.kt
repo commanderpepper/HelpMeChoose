@@ -26,6 +26,9 @@ class MainActivity : AppCompatActivity() {
                         },
                         onAddClick = {
                             navController.navigate(route = "newlist")
+                        },
+                        onSortClick = { listId ->
+                            navController.navigate("sort/$listId")
                         }
                     )
                 }

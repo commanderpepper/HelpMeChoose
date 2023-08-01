@@ -22,6 +22,7 @@ fun HMCHomeUI(
     modifier: Modifier = Modifier,
     hmcHomeViewModel: HMCHomeViewModel = koinViewModel<HMCHomeViewModel>(),
     onHMCClick: (String) -> Unit,
+    onSortClick: (String) -> Unit,
     onAddClick: () -> Unit,
 ){
     val homeUIState = hmcHomeViewModel.hmcItemList.collectAsState()
@@ -29,6 +30,7 @@ fun HMCHomeUI(
         modifier = modifier.padding(16.dp),
         homeUIState = homeUIState.value,
         onHMCClick = onHMCClick,
+        onSortClick = onSortClick,
         onDeleteClick = hmcHomeViewModel::deleteList,
         onAddClick = onAddClick
     )
@@ -39,6 +41,7 @@ fun HMCHomeUI(
     modifier: Modifier = Modifier,
     homeUIState: HomeUIState,
     onHMCClick: (String) -> Unit,
+    onSortClick: (String) -> Unit,
     onDeleteClick: (String) -> Unit,
     onAddClick: () -> Unit,
 ) {
@@ -63,7 +66,7 @@ fun HMCHomeUI(
                 }
             }
             is HomeUIState.Success -> {
-                HMCListUI(hmcList = homeUIState.hmcItems, onHMCClick = onHMCClick, onDeleteClick = onDeleteClick)
+                HMCListUI(hmcList = homeUIState.hmcItems, onHMCClick = onHMCClick, onDeleteClick = onDeleteClick, onSortClick = onSortClick)
             }
         }
         Button(
@@ -78,5 +81,5 @@ fun HMCHomeUI(
 @Preview
 @Composable
 fun HMCHomeUIPreview(){
-    HMCHomeUI(homeUIState = HomeUIState.Success(emptyList()), onHMCClick = {}, onDeleteClick = {}, onAddClick = {})
+    HMCHomeUI(homeUIState = HomeUIState.Success(emptyList()), onHMCClick = {}, onDeleteClick = {}, onAddClick = {}, onSortClick = {})
 }
